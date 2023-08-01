@@ -3,14 +3,8 @@
   <groupId>cinema</groupId>
   <artifactId>cinema</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>cinemaPDS</name>
-  <properties>
-
-  <maven.compiler.source>19</maven.compiler.source>
-
-  <maven.compiler.target>19</maven.compiler.target>
-
- </properties>
+  <name>CinemaPDS</name>
+  
   <dependencies>
   <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 <dependency>
