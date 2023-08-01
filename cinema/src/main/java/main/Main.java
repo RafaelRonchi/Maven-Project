@@ -9,7 +9,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		var JMain = new JFrameMain();
+		JFrameMain JMain = new JFrameMain();
 		JMain.main(args);
 	}
 

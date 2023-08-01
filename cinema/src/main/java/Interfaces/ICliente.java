@@ -9,7 +9,5 @@ public interface ICliente {
 
     public boolean alterar(Usuario novoUsuario, Integer i, Integer j, Integer salaN);
 
-    public static Usuario listarUsuarios(Integer i, Integer j, Integer salaN) {
-		return null;
-	}
+    public Usuario listarUsuarios(Integer i, Integer j, Integer salaN);
 }

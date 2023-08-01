@@ -182,7 +182,7 @@ public class ClienteDAO implements ICliente {
         return false;
     }
 
-    public static Usuario listarUsuarios(Integer i, Integer j, Integer salaN) {
+    public Usuario listarUsuarios(Integer i, Integer j, Integer salaN) {
     	switch (salaN) {
 		case 1: {
 			return  matrizUsuarios[i][j];

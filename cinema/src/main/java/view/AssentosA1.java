@@ -90,7 +90,7 @@ public class AssentosA1 extends JFrame {
 		ImageIcon imageResized = new ImageIcon(img);
 
 		// Criação do JPopupMenu
-		JPopupMenu popupMenu = new RoundedPopopMenu();
+		final JPopupMenu popupMenu = new RoundedPopopMenu();
 
 		// Obtém os dados do usuário (substitua os valores abaixo pelos dados reais
 		String nomeUsuario = Main.getFuncionarioLogado().getNome();
@@ -169,7 +169,7 @@ public class AssentosA1 extends JFrame {
 		contentPane.add(btnVoltar, "cell 0 0,alignx left,aligny top");
 		
 		// Profiller
-		JLabel imgLogin = new JLabel("");
+		final JLabel imgLogin = new JLabel("");
 		contentPane.add(imgLogin, "cell 13 0,alignx right,aligny top");
 		imgLogin.setIcon(imageIcon1);
 		imgLogin.setIcon(imageResized);
