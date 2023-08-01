@@ -33,7 +33,7 @@ public class ClienteDAO implements ICliente {
     
     
 
-    public boolean inserir(Cliente u, Integer i, Integer j, Integer salaN) {
+    public boolean inserir(Cliente u, String sala, Integer cow, Integer col) {
     	
     }
 
