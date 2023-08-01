@@ -19,11 +19,14 @@
     <version>3.7.4</version>
 </dependency>
 <!-- https://mvnrepository.com/artifact/com.mcxiaoke.popupmenu/library -->
+<!-- https://mvnrepository.com/artifact/com.mcxiaoke.popupmenu/parent -->
 <dependency>
     <groupId>com.mcxiaoke.popupmenu</groupId>
-    <artifactId>library</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.0.3</version>
+    <type>pom</type>
 </dependency>
+
 
 </dependencies>
 </project>
