@@ -1,15 +1,15 @@
 package Interfaces;
 
-import modelo.Usuario;
+import modelo.Cliente;
 
 public interface ICliente {
-	public boolean inserir(Usuario u, Integer i, Integer j, Integer salaN);
+	public boolean inserir(Cliente u, Integer i, Integer j, Integer salaN);
 
-    public boolean remover(Usuario usua, Integer i, Integer j, Integer salaN);
+    public boolean remover(Cliente usua, Integer i, Integer j, Integer salaN);
 
-    public boolean alterar(Usuario novoUsuario, Integer i, Integer j, Integer salaN);
+    public boolean alterar(Cliente novoUsuario, Integer i, Integer j, Integer salaN);
 
-    public static Usuario listarUsuarios(Integer i, Integer j, Integer salaN) {
+    public static Cliente listarUsuarios(Integer i, Integer j, Integer salaN) {
 		return null;
 	}
 }

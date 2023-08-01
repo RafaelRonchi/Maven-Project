@@ -1,12 +1,12 @@
 package modelo;
 
-public class Usuario extends Funcionario{
+public class Cliente extends Funcionario{
 
-	public Usuario(long cpf, String nome) {
+	public Cliente(long cpf, String nome) {
 		super(cpf, nome);
 		// TODO Auto-generated constructor stub
 	}
-	public Usuario() {}
+	public Cliente() {}
 
 	/**
 	 * 

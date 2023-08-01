@@ -34,7 +34,7 @@ import javax.swing.text.MaskFormatter;
 import control.ClienteDAO;
 import main.Main;
 import modelo.RoundedPopopMenu;
-import modelo.Usuario;
+import modelo.Cliente;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JRadioButton;
 
@@ -233,7 +233,7 @@ public class CadastroAssentosC1 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				ClienteDAO usuarioDAO = ClienteDAO.getInstancia();
-				Usuario usua = new Usuario();
+				Cliente usua = new Cliente();
 				String cpf = txtCpf.getText();
 				cpf = cpf.replace(".", "");
 				cpf = cpf.replace("-", "");
@@ -343,7 +343,7 @@ public class CadastroAssentosC1 extends JFrame {
 		btnExcluir.setBackground(Color.WHITE);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Usuario usua = new Usuario();
+				Cliente usua = new Cliente();
 				// Criação dos componentes do painel
 				MaskFormatter cpfFormatter = null;
 				try {
@@ -391,7 +391,7 @@ public class CadastroAssentosC1 extends JFrame {
 		});
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Usuario usua = new Usuario();
+				Cliente usua = new Cliente();
 				JRadioButton radioMeia = new JRadioButton("Meia-entrada");
 				MaskFormatter cpfFormatter = null;
 				try {
