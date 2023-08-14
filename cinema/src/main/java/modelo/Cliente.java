@@ -2,7 +2,7 @@ package modelo;
 
 public class Cliente extends Funcionario{
 
-	public Cliente(long cpf, String nome) {
+	public Cliente(long cpf, String nome, Boolean meia) {
 		super(cpf, nome);
 		// TODO Auto-generated constructor stub
 	}

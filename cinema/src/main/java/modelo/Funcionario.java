@@ -1,6 +1,5 @@
 package modelo;
 
-import java.time.LocalDate;
 
 public class Funcionario {
 	private Long Cpf;

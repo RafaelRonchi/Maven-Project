@@ -143,7 +143,12 @@ public class FuncionarioDAO implements IFuncionario{
 	            e.printStackTrace();
 	        }
 	    }
+	    
 
+	    
+	    
+	    
+	    
 	    return false; // Retorna null se o login for inválido ou ocorrer uma exceção
 	}
 

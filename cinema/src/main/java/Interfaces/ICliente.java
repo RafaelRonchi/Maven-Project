@@ -1,15 +1,16 @@
 package Interfaces;
 
+import java.util.ArrayList;
+
 import modelo.Cliente;
 
 public interface ICliente {
-	public boolean inserir(Cliente u, Integer i, Integer j, Integer salaN);
+	public boolean inserir(Cliente u, String sala, Integer row, Integer col);
 
-    public boolean remover(Cliente usua, Integer i, Integer j, Integer salaN);
+	public boolean remover(Cliente u, String sala, Integer row, Integer col);
 
-    public boolean alterar(Cliente novoUsuario, Integer i, Integer j, Integer salaN);
+	public boolean alterar(Cliente u, String sala, Integer row, Integer col);
 
-    public static Cliente listarUsuarios(Integer i, Integer j, Integer salaN) {
-		return null;
-	}
+	public ArrayList<Cliente> listarUsuarios(Integer row, Integer col, String salaN);
+
 }

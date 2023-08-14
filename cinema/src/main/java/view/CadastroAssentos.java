@@ -49,7 +49,7 @@ public class CadastroAssentos extends JFrame {
 	public static int assento;
 	public static int assento1;
 	private JTable table;
-	public Integer salaN = 1;
+	public String salaN = "A1";
 	private Double valorIngresso = 20.00;
 	private JFormattedTextField campo1;
 	/**
@@ -256,7 +256,7 @@ public class CadastroAssentos extends JFrame {
 						usua.setMeiaEntrada(false);
 						usua.setPrecoIngresso(valorIngresso);
 					}
-					boolean a = usuarioDAO.inserir(usua, assento, assento1, salaN);
+					boolean a = usuarioDAO.inserir(usua, salaN, row, col);
 					if (a) {
 						AssentosA1.assentosOcupados[assento][assento1] = true;
 						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + usua.getPrecoIngresso());
@@ -285,9 +285,9 @@ public class CadastroAssentos extends JFrame {
 				System.out.println(assento);
 				System.out.println(assento1);
 
-				var retorno = ClienteDAO.listarUsuarios(assento, assento1, salaN);
+				var retorno = usuarioDAO.listarUsuarios(row, col, salaN);
 				StringBuilder cpfFormatado = new StringBuilder();
-				String numeros = String.valueOf(retorno.getCpf());
+				String numeros = String.valueOf(retorno.());
 				cpfFormatado.append(numeros.substring(0, 3));
 				cpfFormatado.append(".");
 				cpfFormatado.append(numeros.substring(3, 6));
