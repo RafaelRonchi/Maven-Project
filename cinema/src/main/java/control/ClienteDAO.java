@@ -34,7 +34,7 @@ public class ClienteDAO implements ICliente {
 @Override
 	public boolean inserir(Cliente u, String sala, Integer row, Integer col) {
 
-		String comando = "Select * from vendas inner join assento on assento_idassento = assento.idassento where col=?, row=?;  ";
+		String comando = "Select * from venda inner join assento on assento_idassento = assento.idassento where col=?, row=?;  ";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
