@@ -256,14 +256,14 @@ public class CadastroAssentosC2 extends JFrame {
 						usua.setMeiaEntrada(false);
 						usua.setPrecoIngresso(valorIngresso);
 					}
-					boolean a = usuarioDAO.inserir(usua, assento, assento1, salaN);
-					if (a) {
-						AssentosC2.assentosOcupados[assento][assento1] = true;
-						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + usua.getPrecoIngresso());
-					} else {
-
-						JOptionPane.showMessageDialog(null, "Assento indisponível!");
-					}
+					//boolean a = usuarioDAO.inserir(usua, assento, assento1, salaN);
+//					if (a) {
+//						AssentosC2.assentosOcupados[assento][assento1] = true;
+//						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + usua.getPrecoIngresso());
+//					} else {
+//
+//						JOptionPane.showMessageDialog(null, "Assento indisponível!");
+//					}
 				}
 
 				txtCpf.setText(null);
@@ -285,9 +285,9 @@ public class CadastroAssentosC2 extends JFrame {
 				System.out.println(assento);
 				System.out.println(assento1);
 
-				var retorno = ClienteDAO.listarUsuarios(assento, assento1, salaN);
-				StringBuilder cpfFormatado = new StringBuilder();
-				String numeros = String.valueOf(retorno.getCpf());
+//				var retorno = ClienteDAO.listarUsuarios(assento, assento1, salaN);
+//				StringBuilder cpfFormatado = new StringBuilder();
+//				String numeros = String.valueOf(retorno.getCpf());
 				cpfFormatado.append(numeros.substring(0, 3));
 				cpfFormatado.append(".");
 				cpfFormatado.append(numeros.substring(3, 6));
@@ -296,9 +296,9 @@ public class CadastroAssentosC2 extends JFrame {
 				cpfFormatado.append("-");
 				cpfFormatado.append(numeros.substring(9, 11));
 
-				cpfFormatado.toString();
-				Object[] row = { cpfFormatado, retorno.getNome(),retorno.getPrecoIngresso() };
-				model.addRow(row);
+//				cpfFormatado.toString();
+//				Object[] row = { cpfFormatado, retorno.getNome(),retorno.getPrecoIngresso() };
+//				model.addRow(row);
 			}
 			
 		});
@@ -377,13 +377,13 @@ public class CadastroAssentosC2 extends JFrame {
 					} else {
 						usua.setCpf(cpf1);
 						usua.setNome(nome);
-						boolean a = usuarioDAO.remover(usua, assento, assento1, salaN);
-						if (a) {
-							JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-							AssentosC2.assentosOcupados[assento][assento1] = false;
-						} else {
-							JOptionPane.showMessageDialog(null, "Erro, CPF ou/e Nome não encontrado!");
-						}
+//						boolean a = usuarioDAO.remover(usua, assento, assento1, salaN);
+//						if (a) {
+//							JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+//							AssentosC2.assentosOcupados[assento][assento1] = false;
+//						} else {
+//							JOptionPane.showMessageDialog(null, "Erro, CPF ou/e Nome não encontrado!");
+//						}
 					}
 				}
 
@@ -434,13 +434,13 @@ public class CadastroAssentosC2 extends JFrame {
 							usua.setPrecoIngresso(valorIngresso);
 						}
 
-						boolean a = usuarioDAO.alterar(usua, assento, assento1, salaN);
-						if (a) {
-							JOptionPane.showMessageDialog(null, "Nome e/ou preço alterado!");
-						} else {
-							JOptionPane.showMessageDialog(null, "Erro, CPF não encontrado!");
-
-						}
+//						boolean a = usuarioDAO.alterar(usua, assento, assento1, salaN);
+//						if (a) {
+//							JOptionPane.showMessageDialog(null, "Nome e/ou preço alterado!");
+//						} else {
+//							JOptionPane.showMessageDialog(null, "Erro, CPF não encontrado!");
+//
+//						}
 					}
 				}
 

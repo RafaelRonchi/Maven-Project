@@ -287,7 +287,7 @@ public class CadastroAssentos extends JFrame {
 
 				var retorno = usuarioDAO.listarUsuarios(row, col, salaN);
 				StringBuilder cpfFormatado = new StringBuilder();
-				String numeros = String.valueOf(retorno.());
+				//String numeros = String.valueOf(retorno.());
 				cpfFormatado.append(numeros.substring(0, 3));
 				cpfFormatado.append(".");
 				cpfFormatado.append(numeros.substring(3, 6));
@@ -297,8 +297,8 @@ public class CadastroAssentos extends JFrame {
 				cpfFormatado.append(numeros.substring(9, 11));
 
 				cpfFormatado.toString();
-				Object[] row = { cpfFormatado, retorno.getNome(),retorno.getPrecoIngresso() };
-				model.addRow(row);
+				//Object[] row = { cpfFormatado, retorno.getNome(),retorno.getPrecoIngresso() };
+				//model.addRow(row);
 			}
 			
 		});
@@ -372,19 +372,19 @@ public class CadastroAssentos extends JFrame {
 					cpf1 = Long.parseLong(cpf);
 					String nome = campo2.getText();
 
-					if (nome.isEmpty() || cpf.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Nome ou CPF nulos!");
-					} else {
-						usua.setCpf(cpf1);
-						usua.setNome(nome);
-						boolean a = usuarioDAO.remover(usua, assento, assento1, salaN);
-						if (a) {
-							JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-							AssentosA1.assentosOcupados[assento][assento1] = false;
-						} else {
-							JOptionPane.showMessageDialog(null, "Erro, CPF ou/e Nome não encontrado!");
-						}
-					}
+//					if (nome.isEmpty() || cpf.isEmpty()) {
+//						JOptionPane.showMessageDialog(null, "Nome ou CPF nulos!");
+//					} else {
+//						usua.setCpf(cpf1);
+//						usua.setNome(nome);
+//						boolean a = usuarioDAO.remover(usua, assento, assento1, salaN);
+//						if (a) {
+//							JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+//							AssentosA1.assentosOcupados[assento][assento1] = false;
+//						} else {
+//							JOptionPane.showMessageDialog(null, "Erro, CPF ou/e Nome não encontrado!");
+//						}
+//					}
 				}
 
 			}
@@ -434,13 +434,13 @@ public class CadastroAssentos extends JFrame {
 							usua.setPrecoIngresso(valorIngresso);
 						}
 
-						boolean a = usuarioDAO.alterar(usua, assento, assento1, salaN);
-						if (a) {
-							JOptionPane.showMessageDialog(null, "Nome e/ou preço alterado!");
-						} else {
-							JOptionPane.showMessageDialog(null, "Erro, CPF não encontrado!");
-
-						}
+//						boolean a = usuarioDAO.alterar(usua, assento, assento1, salaN);
+//						if (a) {
+//							JOptionPane.showMessageDialog(null, "Nome e/ou preço alterado!");
+//						} else {
+//							JOptionPane.showMessageDialog(null, "Erro, CPF não encontrado!");
+//
+//						}
 					}
 				}
 
