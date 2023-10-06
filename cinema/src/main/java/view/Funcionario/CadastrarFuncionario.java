@@ -1,4 +1,4 @@
-package view;
+package view.Funcionario;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -29,6 +29,7 @@ import javax.swing.text.MaskFormatter;
 import control.FuncionarioDAO;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
+import view.JFrameMain;
 
 public class CadastrarFuncionario extends JFrame {
 

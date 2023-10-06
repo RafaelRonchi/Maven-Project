@@ -1,4 +1,4 @@
-package view;
+package view.Funcionario;
 
 import java.awt.EventQueue;
 
@@ -28,13 +28,14 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Toolkit;
 import net.miginfocom.swing.MigLayout;
+import view.JFrameMain;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import control.AdminDAO;
 import modelo.Admin;
-import view.CadastrarFuncionario;
 public class FuncionarioArea extends JFrame {
 
 	private JPanel contentPane;

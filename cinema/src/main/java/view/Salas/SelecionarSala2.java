@@ -1,4 +1,4 @@
-package view;
+package view.Salas;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import net.miginfocom.swing.MigLayout;
+import view.Assentos.AssentosB1;
+import view.Assentos.AssentosB2;
+import view.Filmes.SelecionarFilme;
+
 import javax.swing.SwingConstants;
 
 public class SelecionarSala2 extends JFrame {

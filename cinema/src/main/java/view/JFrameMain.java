@@ -29,6 +29,9 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Toolkit;
 import net.miginfocom.swing.MigLayout;
+import view.Filmes.SelecionarFilme;
+import view.Funcionario.FuncionarioArea;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

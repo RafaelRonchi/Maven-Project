@@ -6,12 +6,20 @@ public class Sala {
 	private int salaId;
 	private String Nome;
 	private String Time;
-	
+	private Filme filme;
 	public Sala(String nome, String time) {
 		setNome(nome);
 		setTime(time);
 	}
 	
+	public Filme getFilme() {
+		return filme;
+	}
+
+	public void setFilme(Filme filme) {
+		this.filme = filme;
+	}
+
 	public Sala() {
 		
 	}

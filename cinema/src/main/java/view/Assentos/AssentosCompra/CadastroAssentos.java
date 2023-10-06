@@ -1,4 +1,4 @@
-package view;
+package view.Assentos.AssentosCompra;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -36,9 +36,13 @@ import main.Main;
 import modelo.RoundedPopopMenu;
 import modelo.Cliente;
 import net.miginfocom.swing.MigLayout;
+import view.JFrameMain;
+import view.Assentos.AssentosA1;
+import view.Filmes.SelecionarFilme;
+
 import javax.swing.JRadioButton;
 
-public class CadastroAssentosC1 extends JFrame {
+public class CadastroAssentos extends JFrame {
 
 	private JTextField textField;
 	private JTextField textField_1;
@@ -49,14 +53,14 @@ public class CadastroAssentosC1 extends JFrame {
 	public static int assento;
 	public static int assento1;
 	private JTable table;
-	public Integer salaN = 5;
+	public String salaN = "A1";
 	private Double valorIngresso = 20.00;
 	private JFormattedTextField campo1;
 	/**
 	 * Launch the application.
 	 */
 
-	public CadastroAssentosC1(int row, int col) {
+	public CadastroAssentos(int row, int col) {
 		this.assento = row;
 		this.assento1 = col;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(JFrameMain.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
@@ -68,7 +72,7 @@ public class CadastroAssentosC1 extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[119.00px,grow 71][138.00px,grow][170px][151.00][200.00][11.00][54.00px,grow][grow][]", "[grow][53px][grow][41px][9.00px][45px][][][][16.00][55.00px][29.00,grow][grow]"));
+		contentPane.setLayout(new MigLayout("", "[119.00px,grow 71][138.00px,grow][170px][151.00][212.00][14.00][54.00px,grow][grow][]", "[grow][53px][grow][41px][9.00px][45px][][][][16.00][55.00px][29.00,grow][grow]"));
 
 		// Profiller
 		JLabel imgLogin = new JLabel("");
@@ -173,7 +177,7 @@ public class CadastroAssentosC1 extends JFrame {
 		btnNewButton.setBackground(new Color(255, 255, 255));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AssentosC1 jMain = new AssentosC1();
+				AssentosA1 jMain = new AssentosA1();
 				jMain.setVisible(true);
 				jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				dispose();
@@ -256,14 +260,14 @@ public class CadastroAssentosC1 extends JFrame {
 						usua.setMeiaEntrada(false);
 						usua.setPrecoIngresso(valorIngresso);
 					}
-//					boolean a = usuarioDAO.inserir(usua, assento, assento1, salaN);
-//					if (a) {
-//						AssentosC1.assentosOcupados[assento][assento1] = true;
-//						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + usua.getPrecoIngresso());
-//					} else {
-//
-//						JOptionPane.showMessageDialog(null, "Assento indisponível!");
-//					}
+					boolean a = usuarioDAO.inserir(usua, salaN, row, col);
+					if (a) {
+						AssentosA1.assentosOcupados[assento][assento1] = true;
+						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + usua.getPrecoIngresso());
+					} else {
+
+						JOptionPane.showMessageDialog(null, "Assento indisponível!");
+					}
 				}
 
 				txtCpf.setText(null);
@@ -285,20 +289,20 @@ public class CadastroAssentosC1 extends JFrame {
 				System.out.println(assento);
 				System.out.println(assento1);
 
-//				var retorno = ClienteDAO.listarUsuarios(assento, assento1, salaN);
-//				StringBuilder cpfFormatado = new StringBuilder();
-//				String numeros = String.valueOf(retorno.getCpf());
-//				cpfFormatado.append(numeros.substring(0, 3));
-//				cpfFormatado.append(".");
-//				cpfFormatado.append(numeros.substring(3, 6));
-//				cpfFormatado.append(".");
-//				cpfFormatado.append(numeros.substring(6, 9));
-//				cpfFormatado.append("-");
-//				cpfFormatado.append(numeros.substring(9, 11));
-//
-//				cpfFormatado.toString();
-//				Object[] row = { cpfFormatado, retorno.getNome(),retorno.getPrecoIngresso() };
-//				model.addRow(row);
+				var retorno = usuarioDAO.listarUsuarios(row, col, salaN);
+				StringBuilder cpfFormatado = new StringBuilder();
+				//String numeros = String.valueOf(retorno.());
+				cpfFormatado.append(numeros.substring(0, 3));
+				cpfFormatado.append(".");
+				cpfFormatado.append(numeros.substring(3, 6));
+				cpfFormatado.append(".");
+				cpfFormatado.append(numeros.substring(6, 9));
+				cpfFormatado.append("-");
+				cpfFormatado.append(numeros.substring(9, 11));
+
+				cpfFormatado.toString();
+				//Object[] row = { cpfFormatado, retorno.getNome(),retorno.getPrecoIngresso() };
+				//model.addRow(row);
 			}
 			
 		});
@@ -380,7 +384,7 @@ public class CadastroAssentosC1 extends JFrame {
 //						boolean a = usuarioDAO.remover(usua, assento, assento1, salaN);
 //						if (a) {
 //							JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-//							AssentosC1.assentosOcupados[assento][assento1] = false;
+//							AssentosA1.assentosOcupados[assento][assento1] = false;
 //						} else {
 //							JOptionPane.showMessageDialog(null, "Erro, CPF ou/e Nome não encontrado!");
 //						}

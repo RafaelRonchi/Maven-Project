@@ -1,4 +1,4 @@
-package view;
+package view.Assentos;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -26,15 +26,18 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
+import view.Assentos.AssentosCompra.CadastroAssentos;
+import view.Filmes.SelecionarFilme;
+import view.Salas.SelecionarSala1;
+
 import javax.swing.SwingConstants;
 
-public class AssentosB1 extends JFrame {
+public class AssentosA2 extends JFrame {
 
 	private JPanel contentPane;
 	private JButton[][] assentos;
 	public static boolean cor;
 	public static boolean[][] assentosOcupados = new boolean[5][6];
-
 
 	/**
 	 * Launch the application.
@@ -43,7 +46,7 @@ public class AssentosB1 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AssentosB1 frame = new AssentosB1();
+					AssentosA2 frame = new AssentosA2();
 					frame.setVisible(true);
 					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
@@ -56,19 +59,21 @@ public class AssentosB1 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AssentosB1() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AssentosA1.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
+	public AssentosA2() {
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(AssentosA1.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setBackground(Color.WHITE);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 500);
-		
 
 		contentPane = new JPanel();
-	    contentPane.setBackground(new Color(0, 0, 64));
-	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-	    setContentPane(contentPane);
-	    contentPane.setLayout(new MigLayout("", "[47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow]", "[49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow]"));
+		contentPane.setBackground(new Color(0, 0, 64));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new MigLayout("",
+				"[47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow]",
+				"[49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow]"));
 		
 		ImageIcon imageIcon1 = new ImageIcon(SelecionarFilme.class.getResource("/Images/perfil.png"));
 
@@ -150,73 +155,74 @@ public class AssentosB1 extends JFrame {
 
 		// Define a cor de fundo do JPopupMenu
 		popupMenu.setBackground(Color.WHITE);
-	    
+		
 		JButton btnNewButton = new JButton("Voltar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose(); // fecha tela atual
-				SelecionarSala2 selctSala = new SelecionarSala2();
+				SelecionarSala1 selctSala = new SelecionarSala1();
 				selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				selctSala.setVisible(true);
 			}
 		});
-		
+
 		btnNewButton.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 12));
 		btnNewButton.setBackground(Color.WHITE);
 		contentPane.add(btnNewButton, "cell 0 0,alignx left,aligny top");
 		
-	 // Profiller
-		JLabel imgLogin = new JLabel("");
-		contentPane.add(imgLogin, "cell 13 0,alignx right,aligny top");
-		imgLogin.setIcon(imageIcon1);
-		imgLogin.setIcon(imageResized);
-		imgLogin.setSize(80, 80);
-		
-				// Listener para exibir o menu ao clicar no ícone
-				imgLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-				    public void mouseEntered(java.awt.event.MouseEvent evt) {
-				        popupMenu.show(imgLogin, 0, imgLogin.getHeight());
-				    }
-		
-				    public void mouseExited(java.awt.event.MouseEvent evt) {
-				        popupMenu.setVisible(false);
-				    }
-				});
-		
-		JLabel lblAssentosA = new JLabel("Assentos B1");
+				// Profiller
+				JLabel imgLogin = new JLabel("");
+				contentPane.add(imgLogin, "cell 13 0,alignx right,aligny top");
+				imgLogin.setIcon(imageIcon1);
+				imgLogin.setIcon(imageResized);
+				imgLogin.setSize(80, 80);
+				
+						// Listener para exibir o menu ao clicar no ícone
+						imgLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+						    public void mouseEntered(java.awt.event.MouseEvent evt) {
+						        popupMenu.show(imgLogin, 0, imgLogin.getHeight());
+						    }
+				
+						    public void mouseExited(java.awt.event.MouseEvent evt) {
+						        popupMenu.setVisible(false);
+						    }
+						});
+
+		JLabel lblAssentosA = new JLabel("Assentos A2");
 		lblAssentosA.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAssentosA.setForeground(Color.WHITE);
 		lblAssentosA.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 47));
 		contentPane.add(lblAssentosA, "cell 0 1 14 1,grow");
-		
+
 		// Crie a matriz de botões
-				assentos = new JButton[5][6];
+		assentos = new JButton[5][6];
 
-				for (int row = 0; row < 5; row++) {
-					for (int col = 0; col < 6; col++) {
-						final int finalRow = row;
-						final int finalCol = col;
+		for (int row = 0; row < 5; row++) {
+			for (int col = 0; col < 6; col++) {
+				final int finalRow = row;
+				final int finalCol = col;
 
-						JButton btn = new JButton("");
-						btn.setIcon(new ImageIcon(AssentosA1.class.getResource("/Images/24868_redmensioned.jpeg")));
-						btn.setBackground(assentosOcupados[row][col] ? Color.RED : Color.WHITE);
-						assentos[row][col] = btn;
-						contentPane.add(btn, "cell " + (4 + col) + " " + (3 + row) + ",grow");
+				JButton btn = new JButton("");
+				btn.setIcon(new ImageIcon(AssentosA1.class.getResource("/Images/24868_redmensioned.jpeg")));
+				btn.setBackground(assentosOcupados[row][col] ? Color.RED : Color.WHITE);
+				assentos[row][col] = btn;
+				contentPane.add(btn, "cell " + (4 + col) + " " + (3 + row) + ",grow");
 
-						btn.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								CadastroAssentosB1 selctSala = new CadastroAssentosB1(finalRow, finalCol);
-								dispose();
-								selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
-								selctSala.setVisible(true);
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						CadastroAssentos selctSala = new CadastroAssentos(finalRow, finalCol);
+						dispose();
+						selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
+						selctSala.setVisible(true);
 
-								selctSala.assento = finalRow;
-								selctSala.assento1 = finalCol;
-							}
-						});
+						//CadastroAssentosA2.assento = finalRow;
+						//CadastroAssentosA2.assento1 = finalCol;
 					}
+				});
+			}
 
-				}
-				;
+		}
+		
+
 	}
 }
