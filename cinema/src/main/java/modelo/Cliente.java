@@ -1,16 +1,14 @@
 package modelo;
 
 public class Cliente extends Funcionario{
-
+	
 	public Cliente(long cpf, String nome, Boolean meia) {
 		super(cpf, nome);
 		// TODO Auto-generated constructor stub
 	}
 	public Cliente() {}
 
-	/**
-	 * 
-	 */
+	private int clienteId;
 	private Boolean meiaEntrada;
 	private Double precoIngresso;
 
@@ -28,6 +26,12 @@ public class Cliente extends Funcionario{
 
 	public void setPrecoIngresso(Double precoIngresso) {
 		this.precoIngresso = precoIngresso;
+	}
+	public int getClienteId() {
+		return clienteId;
+	}
+	public void setClienteId(int clienteId) {
+		this.clienteId = clienteId;
 	}
 	
 }

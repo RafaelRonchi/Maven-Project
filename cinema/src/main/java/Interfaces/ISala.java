@@ -6,5 +6,6 @@ import modelo.Sala;
 
 public interface ISala {
 	
-	public ArrayList<Sala> verSala();
+	ArrayList<Sala> verSala();
+	
 }

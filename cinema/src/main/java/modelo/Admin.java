@@ -2,8 +2,8 @@ package modelo;
 
 
 public class Admin {
-	private String Login;
-	private String Pass;
+	private String login;
+	private String pass;
 	
 	public Admin(String l, String p) {
 		setLogin(l);
@@ -11,19 +11,19 @@ public class Admin {
 	}
 
 	public String getLogin() {
-		return Login;
+		return login;
 	}
 
-	public void setLogin(String login) {
-		Login = login;
+	public void setLogin(String Login) {
+		login = Login;
 	}
 
 	public String getPass() {
-		return Pass;
+		return pass;
 	}
 
-	public void setPass(String pass) {
-		Pass = pass;
+	public void setPass(String Pass) {
+		pass = Pass;
 	}
 	
 }
