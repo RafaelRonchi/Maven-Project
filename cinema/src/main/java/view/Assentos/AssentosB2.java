@@ -1,4 +1,4 @@
-package view;
+package view.Assentos;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -26,9 +26,12 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
+import view.Filmes.SelecionarFilme;
+import view.Salas.SelecionarSala2;
+
 import javax.swing.SwingConstants;
 
-public class AssentosC1 extends JFrame {
+public class AssentosB2 extends JFrame {
 
 	private JPanel contentPane;
 	private JButton[][] assentos;
@@ -42,7 +45,7 @@ public class AssentosC1 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AssentosC1 frame = new AssentosC1();
+					AssentosB2 frame = new AssentosB2();
 					frame.setVisible(true);
 					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
@@ -55,7 +58,7 @@ public class AssentosC1 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AssentosC1() {
+	public AssentosB2() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AssentosA1.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setBackground(Color.WHITE);
 		setResizable(false);
@@ -154,7 +157,7 @@ public class AssentosC1 extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose(); // fecha tela atual
-				SelecionarSala3 selctSala = new SelecionarSala3();
+				SelecionarSala2 selctSala = new SelecionarSala2();
 				selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				selctSala.setVisible(true);
 			}
@@ -182,11 +185,12 @@ public class AssentosC1 extends JFrame {
 				    }
 				});
 		
-		JLabel lblAssentosA = new JLabel("Assentos C1");
+		JLabel lblAssentosA = new JLabel("Assentos B2");
 		lblAssentosA.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAssentosA.setForeground(Color.WHITE);
 		lblAssentosA.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 47));
 		contentPane.add(lblAssentosA, "cell 0 1 14 1,grow");
+		
 		// Crie a matriz de botões
 		assentos = new JButton[5][6];
 
@@ -203,18 +207,19 @@ public class AssentosC1 extends JFrame {
 
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						CadastroAssentosC1 selctSala = new CadastroAssentosC1(finalRow, finalCol);
+						/*CadastroAssentosB2 selctSala = new CadastroAssentosB2(finalRow, finalCol);
 						dispose();
 						selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
 						selctSala.setVisible(true);
 
 						selctSala.assento = finalRow;
-						selctSala.assento1 = finalCol;
+						selctSala.assento1 = finalCol;*/
 					}
 				});
 			}
 
 		}
+		
 		
 	}
 }

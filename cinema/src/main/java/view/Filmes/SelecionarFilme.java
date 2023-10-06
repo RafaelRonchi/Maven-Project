@@ -1,4 +1,4 @@
-package view;
+package view.Filmes;
 
 import java.awt.EventQueue;
 import javax.swing.JLabel;
@@ -31,6 +31,11 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import net.miginfocom.swing.MigLayout;
+import view.JFrameMain;
+import view.Salas.SelecionarSala1;
+import view.Salas.SelecionarSala2;
+import view.Salas.SelecionarSala3;
+
 import javax.swing.SwingConstants;
 
 public class SelecionarFilme extends JFrame {

@@ -5,6 +5,12 @@ public class Assento {
 	private String nomeSala;
 	private int row;
 	private int col;
+	public int getAssentoId() {
+		return assentoId;
+	}
+	public void setAssentoId(int assentoId) {
+		this.assentoId = assentoId;
+	}
 	private Sala sala;
 	private Cliente cliente;
 	
