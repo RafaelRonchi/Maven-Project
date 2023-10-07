@@ -35,17 +35,23 @@ public class FuncionarioDAO implements IFuncionario{
 	    }
 
 	@Override
-	public boolean inserir(Funcionario p) {
+	public boolean inserir(Funcionario f) {
+		Funcionario funcionarioExist = getFuncionarioCPF(f.getCpf().toString());
+		
+		if(funcionarioExist != null) {
+			return false;
+		}
 
-		String insertSQL = "INSERT INTO FUNCIONARIO (cpf_funcionario, nome_funcionario, funcionario_valor_vendas) VALUES (?, ?, ?)";
+		String insertSQL = "INSERT INTO FUNCIONARIO (cpf_funcionario, nome_funcionario, funcionario_valor_vendas, admin_funcionario) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = null;
 		
 		try {			
 			ps = conexao.prepareStatement(insertSQL);
-			ps.setString( 1, String.valueOf(p.getCpf()));
+			ps.setString( 1, String.valueOf(f.getCpf()));
 			double valor = 0.00;
-			ps.setString( 2, p.getNome());
+			ps.setString( 2, f.getNome());
 			ps.setDouble(3, valor);
+			ps.setBoolean(4, f.getAdmin());
 			
 			ps.execute();
 			ps.close();
@@ -84,12 +90,13 @@ public class FuncionarioDAO implements IFuncionario{
 
 	@Override
 	public boolean alterar(Funcionario novoFuncionario) {
-		String updateSQL = "UPDATE FUNCIONARIO SET nome_funcionario = ? WHERE cpf_funcionario = ?";
+		String updateSQL = "UPDATE FUNCIONARIO SET nome_funcionario = ?, admin_funcionario = ? WHERE cpf_funcionario = ?";
 	    PreparedStatement ps = null;
 	    try {            
 	        ps = conexao.prepareStatement(updateSQL);
 	        ps.setString(1, novoFuncionario.getNome());
-	        ps.setString(2, String.valueOf(novoFuncionario.getCpf()));
+	        ps.setBoolean(2, novoFuncionario.getAdmin());
+	        ps.setString(3, String.valueOf(novoFuncionario.getCpf()));
 	        
 	        int rowsAffected = ps.executeUpdate();
 	        ps.close();
@@ -142,12 +149,7 @@ public class FuncionarioDAO implements IFuncionario{
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-	    }
-	    
-
-	    
-	    
-	    
+	    }	    
 	    
 	    return false; // Retorna null se o login for inválido ou ocorrer uma exceção
 	}
@@ -157,7 +159,7 @@ public class FuncionarioDAO implements IFuncionario{
 	public ArrayList<Funcionario> listarFuncionario() {
 	    ArrayList<Funcionario> lista = new ArrayList<>();
 	    
-	    String selectSQL = "SELECT cpf_funcionario, nome_funcionario, funcionario_valor_vendas FROM FUNCIONARIO";
+	    String selectSQL = "SELECT cpf_funcionario, nome_funcionario, funcionario_valor_vendas, admin_funcionario FROM FUNCIONARIO";
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 	    
@@ -169,8 +171,8 @@ public class FuncionarioDAO implements IFuncionario{
 	            long cpf = rs.getLong("cpf_funcionario");
 	            String nome = rs.getString("nome_funcionario");
 	            Double vendas = rs.getDouble("funcionario_valor_vendas");
-	            
-	            Funcionario funcionario = new Funcionario(cpf, nome, vendas);
+	            Boolean isAdmin = rs.getBoolean("admin_funcionario");
+	            Funcionario funcionario = new Funcionario(cpf, nome, vendas, isAdmin);
 	            lista.add(funcionario);
 	        }
 	    } catch (SQLException e) {
@@ -189,6 +191,93 @@ public class FuncionarioDAO implements IFuncionario{
 	    }
 	    
 	    return lista;
+	}
+
+	@Override
+	public Funcionario verificarFuncionarioAdmin(Funcionario f) {
+		String selectSQL = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ?";
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        ps = conexao.prepareStatement(selectSQL);
+	        ps.setLong(1, f.getCpf());
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            // Cria um novo objeto Funcionario com os dados do resultado da consulta
+	            Funcionario funcionarioEncontrado = new Funcionario();
+	            funcionarioEncontrado.setCpf(rs.getLong("cpf_funcionario"));
+	            funcionarioEncontrado.setNome(rs.getString("nome_funcionario"));
+	            funcionarioEncontrado.setVendasDouble(rs.getDouble("funcionario_valor_vendas"));
+	            funcionarioEncontrado.setAdmin(rs.getBoolean("admin_funcionario"));
+	            
+	            if(funcionarioEncontrado.getAdmin() == true) {
+	            	
+	            	return funcionarioEncontrado;
+	            }
+		        return null;
+
+	        }
+	        return null;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }	    
+	    
+	    return null; 
+	}
+
+	@Override
+	public Funcionario getFuncionarioCPF(String cpf) {
+		String query = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+	         ps = conexao.prepareStatement(query);
+	        ps.setString(1, cpf);
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            Funcionario funcionarioEncontrado = new Funcionario();
+	            funcionarioEncontrado.setCpf(rs.getLong("cpf_funcionario"));
+	            funcionarioEncontrado.setNome(rs.getString("nome_funcionario"));
+	            funcionarioEncontrado.setVendasDouble(rs.getDouble("funcionario_valor_vendas"));
+	            funcionarioEncontrado.setAdmin(rs.getBoolean("admin_funcionario"));
+	            
+	            	
+	            	return funcionarioEncontrado;
+	        
+	        }
+	        return null;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }	    
+	    
+	    return null; 
 	}
 
 
