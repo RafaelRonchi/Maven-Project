@@ -37,7 +37,7 @@ public class FuncionarioDAO implements IFuncionario{
 	@Override
 	public boolean inserir(Funcionario p) {
 
-		String insertSQL = "INSERT INTO FUNCIONARIO (cpf_funcionario, nome_funcionario, funcionario_valor_vendas) VALUES (?, ?, ?)";
+		String insertSQL = "INSERT INTO FUNCIONARIO (cpf_funcionario, nome_funcionario, funcionario_valor_vendas, admin_funcionario) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = null;
 		
 		try {			
@@ -46,6 +46,7 @@ public class FuncionarioDAO implements IFuncionario{
 			double valor = 0.00;
 			ps.setString( 2, p.getNome());
 			ps.setDouble(3, valor);
+			ps.setBoolean(4, p.getAdmin());
 			
 			ps.execute();
 			ps.close();
@@ -142,12 +143,7 @@ public class FuncionarioDAO implements IFuncionario{
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-	    }
-	    
-
-	    
-	    
-	    
+	    }	    
 	    
 	    return false; // Retorna null se o login for inválido ou ocorrer uma exceção
 	}
@@ -189,6 +185,47 @@ public class FuncionarioDAO implements IFuncionario{
 	    }
 	    
 	    return lista;
+	}
+
+	@Override
+	public Funcionario verificarFuncionarioAdmin(Funcionario f) {
+		String selectSQL = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ?";
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        ps = conexao.prepareStatement(selectSQL);
+	        ps.setLong(1, f.getCpf());
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            // Cria um novo objeto Funcionario com os dados do resultado da consulta
+	            Funcionario funcionarioEncontrado = new Funcionario();
+	            funcionarioEncontrado.setCpf(rs.getLong("cpf_funcionario"));
+	            funcionarioEncontrado.setNome(rs.getString("nome_funcionario"));
+	            funcionarioEncontrado.setVendasDouble(rs.getDouble("funcionario_valor_vendas"));
+	            funcionarioEncontrado.setAdmin(rs.getBoolean("admin_funcionario"));
+	            
+	            return funcionarioEncontrado;
+	        }
+	        return null;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }	    
+	    
+	    return null; 
 	}
 
 

@@ -2,6 +2,7 @@
 -- -----------------------------------------------------
 -- Schema cinemapds
 -- -----------------------------------------------------
+-- drop database cinemapds;
 CREATE SCHEMA IF NOT EXISTS `cinemapds`;
 USE `cinemapds` ;
 
@@ -83,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `cinemapds`.`funcionario` (
   `cpf_funcionario` VARCHAR(14) NOT NULL,
   `nome_funcionario` VARCHAR(200) NOT NULL,
   `funcionario_valor_vendas` DOUBLE NOT NULL,
+  `admin_funcionario` tinyint not null,
   PRIMARY KEY (`id_funcionario`));
 
 

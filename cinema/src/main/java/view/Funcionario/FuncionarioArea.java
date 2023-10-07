@@ -34,14 +34,13 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import control.AdminDAO;
-import modelo.Admin;
+
 public class FuncionarioArea extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textLogin;
 	private JTextField textSenha;
-	private AdminDAO adminDAO = AdminDAO.getInstancia();
+	private FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstancia();
 
 
 	/**
@@ -71,8 +70,6 @@ public class FuncionarioArea extends JFrame {
 	 * Create the frame.
 	 */
 	public FuncionarioArea() {
-		 FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstancia();
-		
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(FuncionarioArea.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setBackground(Color.WHITE);
@@ -107,7 +104,7 @@ public class FuncionarioArea extends JFrame {
 		contentPane.add(btnNewButton, "cell 0 0,alignx left,aligny top");
 		
 
-		JLabel lblNewLabel_1 = new JLabel("Login:");
+		JLabel lblNewLabel_1 = new JLabel("Nome:");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setFont(new Font("Yu Gothic Light", Font.BOLD, 30));
@@ -145,7 +142,7 @@ public class FuncionarioArea extends JFrame {
 			imgSenha.setIcon(imageResized2);
 			imgSenha.setSize(60, 60);
 
-			JLabel lblNewLabel_1_1 = new JLabel("Senha:");
+			JLabel lblNewLabel_1_1 = new JLabel("CPF:");
 			lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_1_1.setForeground(new Color(255, 255, 255));
 			lblNewLabel_1_1.setFont(new Font("Yu Gothic Light", Font.BOLD, 30));
@@ -156,13 +153,12 @@ public class FuncionarioArea extends JFrame {
 				btnLogin.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
 				btnLogin.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-					    String txtSenha = textSenha.getText();
-					    String txtLogin = textLogin.getText();
+						String txtNome = textLogin.getText();
+					    String txtCPF = textSenha.getText();
 					    
-					    Admin a = new Admin(txtLogin, txtSenha);
-					    
-					    if(adminDAO.VerAdmin(a)) {
-					    	dispose(); // fecha tela atual
+					    Funcionario funcionarioLogin = funcionarioDAO.verificarFuncionarioAdmin(new Funcionario(Long.parseLong(txtCPF), txtNome));
+					    if(funcionarioLogin != null) {
+					    	dispose();
 					    	CadastrarFuncionario j;
 							try {
 								j = new CadastrarFuncionario();
@@ -174,10 +170,9 @@ public class FuncionarioArea extends JFrame {
 							}
 					    }
 					    else {
-					    	// Exibe uma mensagem de alerta caso nenhum valor seja encontrado
-					        JOptionPane.showMessageDialog(null, "Valores não encontrados. Tente novamente ou contate o técnico!", "Aviso", JOptionPane.WARNING_MESSAGE);
-					        txtSenha = null;
-					        txtLogin= null;
+					        JOptionPane.showMessageDialog(null, "O Funcionario informado não existe ou não tem permissão de admin", "Aviso", JOptionPane.WARNING_MESSAGE);
+					        txtNome = null;
+					        txtCPF= null;
 					    }
 					}
 				});

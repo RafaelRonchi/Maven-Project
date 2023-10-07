@@ -2,45 +2,54 @@ package modelo;
 
 
 public class Funcionario {
-	private Long Cpf;
-	private String Nome;
-	private Double vendasDouble;
+	private Long cpf;
+	private String nome;
+	private Double vendasDouble;	
+	private Boolean admin;
 	
-	public Funcionario(long cpf, String nome) {
-		Cpf = cpf;
-		Nome = nome;
+	public Funcionario(long Cpf, String Nome) {
+		cpf = Cpf;
+		nome = Nome;
 		vendasDouble = 0.00;
 	}
 	
-	public Funcionario(long cpf, String nome, Double vendas) {
-		Cpf = cpf;
-		Nome = nome;
-		vendasDouble = vendas;
+	public Funcionario(long Cpf, String Nome, Double Vendas) {
+		cpf = Cpf;
+		nome = Nome;
+		vendasDouble = Vendas;
 	}
 	public Funcionario() {
 		
 	}
 
 	public Long getCpf() {
-		return Cpf;
+		return cpf;
 	}
 
-	public void setCpf(Long cpf) {
-		Cpf = cpf;
+	public void setCpf(Long Cpf) {
+		cpf = Cpf;
 	}
 
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
-	public void setNome(String nome) {
-		Nome = nome;
+	public void setNome(String Nome) {
+		nome = Nome;
 	}
 	public Double getVendasDouble() {
 		return vendasDouble;
 	}
 	public void setVendasDouble(Double vendasDouble) {
 		this.vendasDouble = vendasDouble;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 	
 }

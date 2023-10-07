@@ -10,5 +10,6 @@ public interface IFuncionario {
 	public boolean remover(Funcionario f);
 	public boolean alterar(Funcionario novoFuncionario);
 	public boolean verificarLogin(Funcionario f);
+	public Funcionario verificarFuncionarioAdmin(Funcionario f);
 	ArrayList<Funcionario> listarFuncionario();
 }
