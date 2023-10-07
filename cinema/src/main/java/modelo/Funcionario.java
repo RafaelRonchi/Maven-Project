@@ -18,6 +18,12 @@ public class Funcionario {
 		nome = Nome;
 		vendasDouble = Vendas;
 	}
+	public Funcionario(long Cpf, String Nome, Double Vendas, Boolean Admin) {
+		cpf = Cpf;
+		nome = Nome;
+		vendasDouble = Vendas;
+		admin = Admin;
+	}
 	public Funcionario() {
 		
 	}

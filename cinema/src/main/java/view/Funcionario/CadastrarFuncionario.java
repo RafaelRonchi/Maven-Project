@@ -169,7 +169,8 @@ public class CadastrarFuncionario extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setVisible(false);
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setLayout(new MigLayout("", "[100px,grow][][][100px,grow][][100px,grow]", "[][20px][grow]"));
+		panel.setLayout(new MigLayout("", "[100px,grow][][][100px,grow][][100px,grow][][100px,grow]", "[][20px][grow]"));
+
 		contentPane.add(panel, "cell 1 9 3 1,grow");
 
 		JLabel cpfLabel = new JLabel("CPF");
@@ -182,15 +183,23 @@ public class CadastrarFuncionario extends JFrame {
 		panel.add(nomeLabel, "cell 3 0,width 33,alignx center,aligny center");
 
 		JSeparator separator2 = new JSeparator(SwingConstants.VERTICAL);
-		panel.add(separator2, "flowx,cell 4 0,growy");
+		panel.add(separator2, "cell 4 0,growy");
 
 		JLabel vendasLabel = new JLabel("Valor Vendas");
 		vendasLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(vendasLabel, "cell 5 0,width 53,alignx center,aligny center");
 
+		JSeparator separator3 = new JSeparator(SwingConstants.VERTICAL);
+		panel.add(separator3, "cell 6 0,growy");
+
+		JLabel adminLabel = new JLabel("É um admin");
+		adminLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(adminLabel, "cell 7 0,width 53,alignx center,aligny center");
+
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "CPF", "Nome", "Valor Vendas" }));
-		panel.add(table, "cell 0 2 6 1,grow");
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "CPF", "Nome", "Valor Vendas", "Admin" }));
+		panel.add(table, "cell 0 2 8 1,grow");
+
 
 		JButton btnExcluir = new JButton("Excluir");
 
@@ -267,8 +276,6 @@ public class CadastrarFuncionario extends JFrame {
 				}
 				Funcionario usua = new Funcionario();
 
-				// Long cpf = Long.parseLong(txtCpf.getText());
-
 				// Criação dos componentes do painel
 				campo1 = new JFormattedTextField(cpfFormatter);// Criação do painel personalizado
 				JTextField campo2 = new JTextField();
@@ -278,6 +285,7 @@ public class CadastrarFuncionario extends JFrame {
 				painel.add(campo1);
 				painel.add(new JLabel("Novo nome:"));
 				painel.add(campo2);
+				painel.add(radioAdmin);
 
 				int opcao = JOptionPane.showOptionDialog(null, painel, "Digite o CPF e um novo NOME",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
@@ -296,6 +304,7 @@ public class CadastrarFuncionario extends JFrame {
 					} else {
 						usua.setCpf(cpf1);
 						usua.setNome(nome);
+						usua.setAdmin(radioAdmin.isSelected());
 						boolean a = funcionarioDAO.alterar(usua);
 						if (a) {
 							JOptionPane.showMessageDialog(null, "Nome alterado!");
@@ -312,33 +321,32 @@ public class CadastrarFuncionario extends JFrame {
 		btnListar.setBackground(Color.WHITE);
 
 		btnListar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<Funcionario> lista = funcionarioDAO.listarFuncionario();
+		    public void actionPerformed(ActionEvent e) {
+		        ArrayList<Funcionario> lista = funcionarioDAO.listarFuncionario();
 
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				model.setRowCount(0); // limpa as linhas da tabela
+		        DefaultTableModel model = (DefaultTableModel) table.getModel();
+		        model.setRowCount(0); // Limpa as linhas da tabela
 
-				for (Funcionario funcionario : lista) {
+		        for (Funcionario funcionario : lista) {
+		            String cpfFormatado = formatarCPF(funcionario.getCpf());
+		            String isAdmin = funcionario.getAdmin() ? "Sim" : "Não";
+		            Object[] row = { cpfFormatado, funcionario.getNome(), funcionario.getVendasDouble(), isAdmin };
+		            model.addRow(row);
+		        }
 
-					StringBuilder cpfFormatado = new StringBuilder();
-					String numeros = String.valueOf(funcionario.getCpf());
-					cpfFormatado.append(numeros.substring(0, 3));
-					cpfFormatado.append(".");
-					cpfFormatado.append(numeros.substring(3, 6));
-					cpfFormatado.append(".");
-					cpfFormatado.append(numeros.substring(6, 9));
-					cpfFormatado.append("-");
-					cpfFormatado.append(numeros.substring(9, 11));
+		        panel.setVisible(true);
+		        btnExcluir.setVisible(true);
+		        btnAlterar.setVisible(true);
+		    }
 
-					cpfFormatado.toString();
-					Object[] row = { cpfFormatado, funcionario.getNome(), funcionario.getVendasDouble() };
-					model.addRow(row);
-				}
-
-				panel.setVisible(true);
-				btnExcluir.setVisible(true);
-				btnAlterar.setVisible(true);
-			}
+		    private String formatarCPF(Long cpf) {
+		        String cpfFormatado = String.format("%011d", cpf);
+		        return cpfFormatado.substring(0, 3) + "." +
+		               cpfFormatado.substring(3, 6) + "." +
+		               cpfFormatado.substring(6, 9) + "-" +
+		               cpfFormatado.substring(9, 11);
+		    }
 		});
+
 	}
 }

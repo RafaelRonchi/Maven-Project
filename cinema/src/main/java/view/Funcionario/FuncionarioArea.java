@@ -147,6 +147,8 @@ public class FuncionarioArea extends JFrame {
 			lblNewLabel_1_1.setForeground(new Color(255, 255, 255));
 			lblNewLabel_1_1.setFont(new Font("Yu Gothic Light", Font.BOLD, 30));
 			contentPane.add(lblNewLabel_1_1, "cell 2 4,growx,aligny center");
+			MaskFormatter cpfFormatter = null;
+			
 		
 				JButton btnLogin = new JButton("Login");
 				btnLogin.setBackground(Color.WHITE);
@@ -155,15 +157,15 @@ public class FuncionarioArea extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						String txtNome = textLogin.getText();
 					    String txtCPF = textSenha.getText();
-					    
+					    txtCPF = txtCPF.replaceAll("[^0-9]", ""); // Remove todos os caracteres não numéricos
 					    Funcionario funcionarioLogin = funcionarioDAO.verificarFuncionarioAdmin(new Funcionario(Long.parseLong(txtCPF), txtNome));
 					    if(funcionarioLogin != null) {
 					    	dispose();
-					    	CadastrarFuncionario j;
+					    	CadastrarFuncionario func;
 							try {
-								j = new CadastrarFuncionario();
-								j.setVisible(true);
-								j.setExtendedState(JFrame.MAXIMIZED_BOTH);
+								func = new CadastrarFuncionario();
+								func.setVisible(true);
+								func.setExtendedState(JFrame.MAXIMIZED_BOTH);
 							} catch (ParseException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -176,8 +178,13 @@ public class FuncionarioArea extends JFrame {
 					    }
 					}
 				});
-				
-				textSenha = new JTextField();
+				try {
+					cpfFormatter = new MaskFormatter("###.###.###-##");
+
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				textSenha = new JFormattedTextField(cpfFormatter);
 				textSenha.setColumns(10);
 				contentPane.add(textSenha, "cell 3 4,growx,aligny center");
 				contentPane.add(btnLogin, "cell 2 6 2 1,grow");
