@@ -2,17 +2,30 @@ package modelo;
 
 public class Assento {
 	private int assentoId;
-	private String nomeSala;
 	private int row;
 	private int col;
+	private Sala sala;
+	private Cliente cliente;
+
+	
+	public Assento() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Assento(int Row, int Col, Sala Sala) {
+		setRow(Row); 
+		setCol(Col);
+		setSala(Sala);
+	}
+	
+	
+	
 	public int getAssentoId() {
 		return assentoId;
 	}
 	public void setAssentoId(int assentoId) {
 		this.assentoId = assentoId;
 	}
-	private Sala sala;
-	private Cliente cliente;
 	
 	
 	public Sala getSala() {
@@ -26,12 +39,6 @@ public class Assento {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-	public String getNomeSala() {
-		return nomeSala;
-	}
-	public void setNomeSala(String nomeSala) {
-		this.nomeSala = nomeSala;
 	}
 	public int getRow() {
 		return row;

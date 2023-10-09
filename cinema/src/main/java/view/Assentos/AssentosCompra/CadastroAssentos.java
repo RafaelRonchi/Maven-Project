@@ -31,9 +31,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import control.ClienteDAO;
+import control.AssentoDAO;
+
 import main.Main;
 import modelo.RoundedPopopMenu;
+import modelo.Assento;
 import modelo.Cliente;
 import net.miginfocom.swing.MigLayout;
 import view.JFrameMain;
@@ -49,20 +51,16 @@ public class CadastroAssentos extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtNome;
 	private JTextField txtCpf;
-	private ClienteDAO usuarioDAO = ClienteDAO.getInstancia();
-	public static int assento;
-	public static int assento1;
+	private AssentoDAO assentoDAO = AssentoDAO.getInstancia();
 	private JTable table;
-	public String salaN = "A1";
 	private Double valorIngresso = 20.00;
 	private JFormattedTextField campo1;
 	/**
 	 * Launch the application.
 	 */
 
-	public CadastroAssentos(int row, int col) {
-		this.assento = row;
-		this.assento1 = col;
+	public CadastroAssentos(Assento assento) {
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(JFrameMain.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -235,9 +233,7 @@ public class CadastroAssentos extends JFrame {
 		btnCadastrar.setBackground(Color.WHITE);
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				ClienteDAO usuarioDAO = ClienteDAO.getInstancia();
-				Cliente usua = new Cliente();
+				Cliente cliente = new Cliente();
 				String cpf = txtCpf.getText();
 				cpf = cpf.replace(".", "");
 				cpf = cpf.replace("-", "");
@@ -250,20 +246,19 @@ public class CadastroAssentos extends JFrame {
 				if (nome.isEmpty() || cpf.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Nome ou CPF nulos!");
 				} else {
-					usua.setCpf(cpf1);
-					usua.setNome(nome);
+					cliente.setCpf(cpf1);
+					cliente.setNome(nome);
 
 					if (pagaMeia.isSelected()) {
-						usua.setMeiaEntrada(true);
-						usua.setPrecoIngresso(valorIngresso / 2);
+						cliente.setMeiaEntrada(true);
 					} else {
-						usua.setMeiaEntrada(false);
-						usua.setPrecoIngresso(valorIngresso);
+						cliente.setMeiaEntrada(false);
 					}
-					boolean a = usuarioDAO.inserir(usua, salaN, row, col);
-					if (a) {
-						AssentosA1.assentosOcupados[assento][assento1] = true;
-						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + usua.getPrecoIngresso());
+					Assento assentoMedodoCadastro = assentoDAO.cadastrarClienteNoAssento(assento, cliente);
+					if (assentoMedodoCadastro != null) {
+						AssentosA1.assentosOcupados[assento.getRow()][assento.getCol()] = true;
+						Double valor = cliente.getMeiaEntrada() ? 10.0 : 20.0;
+						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + valor);
 					} else {
 
 						JOptionPane.showMessageDialog(null, "Assento indisponível!");
@@ -286,10 +281,8 @@ public class CadastroAssentos extends JFrame {
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				model.setRowCount(0); // limpa as linhas da tabela
 
-				System.out.println(assento);
-				System.out.println(assento1);
 
-				var retorno = usuarioDAO.listarUsuarios(row, col, salaN);
+				var retorno = assentoDAO.listarClienteCadastroNoAssento(assento);
 				StringBuilder cpfFormatado = new StringBuilder();
 				//String numeros = String.valueOf(retorno.());
 				cpfFormatado.append(numeros.substring(0, 3));
@@ -432,11 +425,6 @@ public class CadastroAssentos extends JFrame {
 						usua.setCpf(cpf1);
 						usua.setNome(nome);
 						boolean isMeia = radioMeia.isSelected();
-						if (isMeia) {
-							usua.setPrecoIngresso(valorIngresso / 2);
-						} else {
-							usua.setPrecoIngresso(valorIngresso);
-						}
 
 //						boolean a = usuarioDAO.alterar(usua, assento, assento1, salaN);
 //						if (a) {

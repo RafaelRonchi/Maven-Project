@@ -12,7 +12,9 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import main.Main;
+import modelo.Assento;
 import modelo.RoundedPopopMenu;
+import modelo.Sala;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -26,6 +28,7 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
+import view.Assentos.AssentosCompra.CadastroAssentos;
 import view.Filmes.SelecionarFilme;
 import view.Salas.SelecionarSala2;
 
@@ -37,7 +40,7 @@ public class AssentosB2 extends JFrame {
 	private JButton[][] assentos;
 	public static boolean cor;
 	public static boolean[][] assentosOcupados = new boolean[5][6];
-
+	Sala salasAssentos = new Sala("B2");
 	/**
 	 * Launch the application.
 	 */
@@ -207,13 +210,13 @@ public class AssentosB2 extends JFrame {
 
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						/*CadastroAssentosB2 selctSala = new CadastroAssentosB2(finalRow, finalCol);
+						Assento assentoSelecionado = new Assento(finalRow, finalCol, salasAssentos);
+						
+						CadastroAssentos selctSala = new CadastroAssentos(assentoSelecionado);
 						dispose();
 						selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
 						selctSala.setVisible(true);
 
-						selctSala.assento = finalRow;
-						selctSala.assento1 = finalCol;*/
 					}
 				});
 			}

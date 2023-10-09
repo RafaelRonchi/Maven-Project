@@ -21,7 +21,7 @@ public class AssentoDAO implements IAssento {
 		conexao = ConexaoMySql.getConexao();
 	}
 
-	private static AssentoDAO getInstancia() {
+	public static AssentoDAO getInstancia() {
 		if (instancia == null) {
 			instancia = new AssentoDAO();
 			assento = new ArrayList<Assento>();
@@ -30,26 +30,28 @@ public class AssentoDAO implements IAssento {
 	}
 
 	@Override
-	public Assento cadastrarClienteNoAssento(Assento a, Cliente c, Sala s) {
+	public Assento cadastrarClienteNoAssento(Assento a, Cliente c) {
+		
+		if(listarClienteCadastroNoAssento(a) != null) return null;
 
 		String insertSQLAssento = "INSERT INTO ASSENTO (nome_sala, row, col, sala_idsala, cliente_idcliente) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement psAssento = null;
 
 		try {
 			psAssento = conexao.prepareStatement(insertSQLAssento);
-			psAssento.setString(1, a.getNomeSala());
+			psAssento.setString(1, a.getSala().getNome());
 			psAssento.setInt(2, a.getRow());
 			psAssento.setInt(3, a.getCol());
 
-			Sala salaMetodo = pegarSala(s);
-			if (salaMetodo == null)
-				return null;
+			Sala salaMetodo = pegarSala(a.getSala());
+			if (salaMetodo == null) return null;
+			
 			a.setSala(salaMetodo);
 			psAssento.setInt(4, a.getSala().getSalaId());
 
 			Cliente clienteMetodo = cadastrarCliente(c);
-			if (clienteMetodo == null)
-				return null;
+			if (clienteMetodo == null) return null;
+			
 			a.setCliente(clienteMetodo);
 			psAssento.setInt(5, a.getCliente().getClienteId());
 
@@ -77,7 +79,7 @@ public class AssentoDAO implements IAssento {
 			preparedStatement = conexao.prepareStatement(selectSQL);
 			preparedStatement.setInt(1, a.getRow());
 			preparedStatement.setInt(2, a.getCol());
-			preparedStatement.setString(3, a.getNomeSala());
+			preparedStatement.setString(3, a.getSala().getNome());
 
 			resultSet = preparedStatement.executeQuery();
 
@@ -90,16 +92,15 @@ public class AssentoDAO implements IAssento {
 					);
 				cliente.setMeiaEntrada(resultSet.getBoolean("cliente_meia_entrada"));
 
-				// Preencha os dados da sala no assento
+				
 				Sala sala = new Sala();
-				sala.setNome(a.getNomeSala()); // Você pode preencher outros dados da sala se necessário
+				sala.setNome(a.getSala().getNome()); 
 
 				a.setCliente(cliente);
 				a.setSala(sala);
 
 				return a;
 			} else {
-				// Assento não encontrado ou não está associado a um cliente
 				return null;
 			}
 		} catch (SQLException e) {

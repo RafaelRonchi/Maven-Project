@@ -56,7 +56,6 @@ CREATE TABLE IF NOT EXISTS `cinemapds`.`cliente` (
 -- Table `cinemapds`.`assento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemapds`.`assento` (
-  `nome_sala` VARCHAR(45) NOT NULL,
   `idassento` INT NOT NULL AUTO_INCREMENT,
   `row` SMALLINT NOT NULL,
   `col` SMALLINT NOT NULL,

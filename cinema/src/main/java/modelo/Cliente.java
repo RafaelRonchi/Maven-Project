@@ -10,7 +10,6 @@ public class Cliente extends Funcionario{
 
 	private int clienteId;
 	private Boolean meiaEntrada;
-	private Double precoIngresso;
 
 	public Boolean getMeiaEntrada() {
 		return meiaEntrada;
@@ -20,13 +19,6 @@ public class Cliente extends Funcionario{
 		this.meiaEntrada = meiaEntrada;
 	}
 
-	public Double getPrecoIngresso() {
-		return precoIngresso;
-	}
-
-	public void setPrecoIngresso(Double precoIngresso) {
-		this.precoIngresso = precoIngresso;
-	}
 	public int getClienteId() {
 		return clienteId;
 	}

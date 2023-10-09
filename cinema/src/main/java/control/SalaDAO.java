@@ -33,7 +33,7 @@ public class SalaDAO implements ISala{
 		// TODO Auto-generated method stub
 		ArrayList<Sala> salas = new ArrayList<>();
 		
-		String selectSQL = "Select sala_nome, sala_horario from SALA";
+		String selectSQL = "Select nome_sala, sala_horario from SALA";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
@@ -43,9 +43,11 @@ public class SalaDAO implements ISala{
 			
 			while(rs.next()) {
 				
-				Sala s = new Sala(rs.getString("sala_nome"), rs.getString("sala_horario"));
+				Sala s = new Sala(rs.getString("nome_sala"), rs.getString("sala_horario"));
 				salas.add(s);
 			}
+			
+			return salas;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}finally {
