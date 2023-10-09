@@ -10,6 +10,8 @@ import Interfaces.IAssento;
 import conexao.ConexaoMySql;
 import modelo.Assento;
 import modelo.Cliente;
+import java.sql.Statement;
+
 import modelo.Sala;
 
 public class AssentoDAO implements IAssento {
@@ -21,7 +23,7 @@ public class AssentoDAO implements IAssento {
 		conexao = ConexaoMySql.getConexao();
 	}
 
-	private static AssentoDAO getInstancia() {
+	public static AssentoDAO getInstancia() {
 		if (instancia == null) {
 			instancia = new AssentoDAO();
 			assento = new ArrayList<Assento>();
@@ -30,45 +32,54 @@ public class AssentoDAO implements IAssento {
 	}
 
 	@Override
-	public Assento cadastrarClienteNoAssento(Assento a, Cliente c, Sala s) {
+	public Assento cadastrarClienteNoAssento(Assento a, Cliente c) {
+	    if (listarClienteCadastroNoAssento(a) != null) return null;
 
-		String insertSQLAssento = "INSERT INTO ASSENTO (nome_sala, row, col, sala_idsala, cliente_idcliente) VALUES (?, ?, ?, ?, ?)";
-		PreparedStatement psAssento = null;
+	    String insertSQLAssento = "INSERT INTO ASSENTO (`row`, col, sala_idsala, cliente_idcliente) VALUES (?, ?, ?, ?)";
+	    PreparedStatement psAssento = null;
 
-		try {
-			psAssento = conexao.prepareStatement(insertSQLAssento);
-			psAssento.setString(1, a.getNomeSala());
-			psAssento.setInt(2, a.getRow());
-			psAssento.setInt(3, a.getCol());
+	    try {
+	        psAssento = conexao.prepareStatement(insertSQLAssento, Statement.RETURN_GENERATED_KEYS);
+	        psAssento.setInt(1, a.getRow());
+	        psAssento.setInt(2, a.getCol());
 
-			Sala salaMetodo = pegarSala(s);
-			if (salaMetodo == null)
-				return null;
-			a.setSala(salaMetodo);
-			psAssento.setInt(4, a.getSala().getSalaId());
+	        Sala salaMetodo = pegarSala(a.getSala());
+	        if (salaMetodo == null) return null;
 
-			Cliente clienteMetodo = cadastrarCliente(c);
-			if (clienteMetodo == null)
-				return null;
-			a.setCliente(clienteMetodo);
-			psAssento.setInt(5, a.getCliente().getClienteId());
+	        a.setSala(salaMetodo);
+	        psAssento.setInt(3, a.getSala().getSalaId());
 
-			psAssento.execute();
-			psAssento.close();
-			return a;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+	        Cliente clienteMetodo = cadastrarCliente(c);
+	        if (clienteMetodo == null) return null;
 
+	        a.setCliente(clienteMetodo);
+	        psAssento.setInt(4, a.getCliente().getClienteId());
+
+	        psAssento.execute();
+
+	        // Obtenha as chaves geradas
+	        ResultSet generatedKeys = psAssento.getGeneratedKeys();
+	        if (generatedKeys.next()) {
+	        	a.setAssentoId(generatedKeys.getInt(1));
+	        }
+
+	        psAssento.close();
+	        return a;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
+
 
 	@Override
 	public Assento listarClienteCadastroNoAssento(Assento a) {
-		String selectSQL = "SELECT C.cliente_nome, C.cliente_cpf, C.cliente_meia_entrada " + "FROM ASSENTO A "
-				+ "INNER JOIN CLIENTE C ON A.cliente_idcliente = C.idcliente "
-				+ "INNER JOIN SALA S ON A.sala_idsala = S.idsala "
-				+ "WHERE A.row = ? AND A.col = ? AND A.nome_sala = ?";
+		String selectSQL = "SELECT C.cliente_nome, C.cliente_cpf, C.cliente_meia_entrada " +
+				"FROM ASSENTO A " +
+				"INNER JOIN CLIENTE C ON A.cliente_idcliente = C.idcliente " +
+				"INNER JOIN SALA S ON A.sala_idsala = S.idsala " +
+				"WHERE A.row = ? AND A.col = ? AND S.nome_sala = ?";
+;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -77,7 +88,7 @@ public class AssentoDAO implements IAssento {
 			preparedStatement = conexao.prepareStatement(selectSQL);
 			preparedStatement.setInt(1, a.getRow());
 			preparedStatement.setInt(2, a.getCol());
-			preparedStatement.setString(3, a.getNomeSala());
+			preparedStatement.setString(3, a.getSala().getNome());
 
 			resultSet = preparedStatement.executeQuery();
 
@@ -90,16 +101,15 @@ public class AssentoDAO implements IAssento {
 					);
 				cliente.setMeiaEntrada(resultSet.getBoolean("cliente_meia_entrada"));
 
-				// Preencha os dados da sala no assento
+				
 				Sala sala = new Sala();
-				sala.setNome(a.getNomeSala()); // Você pode preencher outros dados da sala se necessário
+				sala.setNome(a.getSala().getNome()); 
 
 				a.setCliente(cliente);
 				a.setSala(sala);
 
 				return a;
 			} else {
-				// Assento não encontrado ou não está associado a um cliente
 				return null;
 			}
 		} catch (SQLException e) {
@@ -125,7 +135,7 @@ public class AssentoDAO implements IAssento {
 		String insertSQLCliente = "INSERT INTO CLIENTE (cliente_nome, cliente_cpf, cliente_meia_entrada) VALUES (?, ?, ?)";
 		try {
 			conexao.prepareStatement(insertSQLCliente);
-			PreparedStatement psCliente = conexao.prepareStatement(insertSQLCliente);
+			PreparedStatement psCliente = conexao.prepareStatement(insertSQLCliente, Statement.RETURN_GENERATED_KEYS);
 			psCliente.setString(1, c.getNome());
 			psCliente.setString(2, c.getCpf().toString());
 			psCliente.setBoolean(3, c.getMeiaEntrada());
@@ -134,9 +144,9 @@ public class AssentoDAO implements IAssento {
 			// Recupere o ID gerado para o cliente
 			ResultSet generatedKeys = psCliente.getGeneratedKeys();
 			if (generatedKeys.next()) {
-				clienteId = generatedKeys.getInt(1);
-				c.setClienteId(clienteId);
-				return c;
+			    clienteId = generatedKeys.getInt(1);
+			    c.setClienteId(clienteId);
+			    return c;
 			}
 
 			psCliente.close();

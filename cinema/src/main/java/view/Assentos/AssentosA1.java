@@ -12,7 +12,9 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import main.Main;
+import modelo.Assento;
 import modelo.RoundedPopopMenu;
+import modelo.Sala;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -38,7 +40,7 @@ public class AssentosA1 extends JFrame {
 	static JButton[][] assentos;
 	public static boolean cor;
 	public static boolean[][] assentosOcupados = new boolean[5][6];
-
+	Sala salasAssentos = new Sala("A1");
 
 	/**
 	 * Launch the application.
@@ -213,13 +215,14 @@ public class AssentosA1 extends JFrame {
 				
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						CadastroAssentos selctSala = new CadastroAssentos(finalRow, finalCol);
-						dispose();
-						selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
+						
+						Assento assentoSelecionado = new Assento(finalRow, finalCol, salasAssentos);
+						
+						CadastroAssentos selctSala = new CadastroAssentos(assentoSelecionado);
+						
 						selctSala.setVisible(true);
-
-						selctSala.assento = finalRow;
-						selctSala.assento1 = finalCol;
+						selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
+						dispose();
 					}
 				});
 			}
