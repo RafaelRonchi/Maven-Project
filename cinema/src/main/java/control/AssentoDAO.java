@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import Interfaces.IAssento;
 import conexao.ConexaoMySql;
@@ -158,6 +159,26 @@ public class AssentoDAO implements IAssento {
 		}
 
 	}
+	public Assento removerClienteDoAssento(Assento a) {		
+	    String deleteSQLAssento = "DELETE FROM ASSENTO WHERE `row` = ? AND col = ? AND sala_idsala = ? ";
+	    PreparedStatement psAssento = null;
+
+	    try {
+	    	psAssento = conexao.prepareStatement(deleteSQLAssento);
+	        psAssento.setInt(1, a.getRow());
+	        psAssento.setInt(2, a.getCol());
+	        psAssento.setInt(3, a.getSala().getSalaId());
+	        
+	        psAssento.executeUpdate();
+	        
+	        psAssento.close();
+	        return a;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	      
+	    }
+		return null;
+	}
 
 	public Sala pegarSala(Sala s) {
 		String getSqlSala = "SELECT * FROM SALA WHERE nome_sala = ?";
@@ -193,5 +214,132 @@ public class AssentoDAO implements IAssento {
 
 		return null;
 	}
+	
+	public boolean[][] pegarAssentosOcupados(Sala sala){
+		int row = 5;
+		int col = 6;
+		
+		boolean[][] assentosOcupados = new boolean[row][col];
+		Sala salaExist = pegarSala(sala);
+				
 
+		String selectSQL = "SELECT `row`, col FROM ASSENTO WHERE sala_idsala = ?";
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			preparedStatement = conexao.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, salaExist.getSalaId());
+			resultSet = preparedStatement.executeQuery();
+			
+			if (!resultSet.next())  return assentosOcupados;
+			
+			while (resultSet.next()) {
+				int rowRS = resultSet.getInt("row");
+	            int colRS = resultSet.getInt("col");
+
+	            assentosOcupados[rowRS][colRS] = true;
+	            
+			}
+			return assentosOcupados;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return assentosOcupados;
+		}
+		
+	}
+	
+	public Cliente alterarCliente(Cliente clienteAtualizado) {
+		System.out.println(clienteAtualizado.getCpf());
+	    String updateSQLCliente = "UPDATE CLIENTE SET cliente_nome = ?, cliente_meia_entrada = ? WHERE idcliente = ?";
+	    PreparedStatement psCliente = null;
+	    
+	    Cliente existCliente = pegarClientePorCPF(clienteAtualizado.getCpf());
+	    System.out.println(existCliente.getClienteId());
+	    clienteAtualizado.setClienteId(existCliente.getClienteId());
+	    try {
+	        psCliente = conexao.prepareStatement(updateSQLCliente);
+	        psCliente.setString(1, clienteAtualizado.getNome());
+	        psCliente.setBoolean(2, clienteAtualizado.getMeiaEntrada());
+	        psCliente.setInt(3, clienteAtualizado.getClienteId());
+
+	        int rowsAffected = psCliente.executeUpdate();
+
+	        if (rowsAffected > 0) {
+	            return clienteAtualizado;
+	        } else {
+	            return null; 
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+	    } finally {
+	        try {
+	            if (psCliente != null) {
+	                psCliente.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
+	public Cliente pegarClientePorCPF(Long CPF) {
+		 String getSQLCliente = "SELECT * FROM CLIENTE WHERE cliente_cpf = ?";
+		    PreparedStatement psCliente = null;
+		    ResultSet rS = null;
+		    
+		    try {
+		        psCliente = conexao.prepareStatement(getSQLCliente);
+		        System.out.println(CPF);
+		        psCliente.setString(1, CPF.toString());
+
+		        rS = psCliente.executeQuery();
+
+		        if(!rS.next()) return null;
+		        Cliente cliente = new Cliente();
+		        cliente.setClienteId(rS.getInt("idcliente"));
+				cliente.setNome(rS.getString("cliente_nome"));
+				cliente.setCpf(Long.parseLong(	rS.getString("cliente_cpf")));
+				cliente.setMeiaEntrada(rS.getBoolean("cliente_meia_entrada"));
+				return cliente;
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return null;
+		    } finally {
+		        try {
+		            if (psCliente != null) {
+		                psCliente.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+	}
+
+	
+	public List<Cliente> pegarClientes(){
+		String selectSQL = "SELECT * FROM CLIENTE";
+		PreparedStatement pS = null;
+		ResultSet rS = null;
+		List<Cliente> clientes = null;
+		try {
+			pS = conexao.prepareStatement(selectSQL);
+			rS = pS.executeQuery();
+			
+			if(!rS.next()) return null;
+			
+			while(rS.next()) {
+				clientes.add(new Cliente( rS.getInt("idcliente") ,Long.parseLong(rS.getString("cliente_cpf")), rS.getString("cliente_nome"), rS.getBoolean("cliente_meia_entrada")));
+			}
+			
+			return clientes;
+	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return clientes;
+	}
+	 
+	
 }

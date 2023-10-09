@@ -238,9 +238,7 @@ public class CadastroAssentos extends JFrame {
 				cpf = cpf.replace(".", "");
 				cpf = cpf.replace("-", "");
 				cpf = cpf.trim();
-				Long cpf1=null;
-				cpf1 = Long.parseLong(cpf);
-
+				Long cpf1 = Long.parseLong(cpf);
 				String nome = txtNome.getText();
 
 				if (nome.isEmpty() || cpf.isEmpty()) {
@@ -259,6 +257,25 @@ public class CadastroAssentos extends JFrame {
 						AssentosA1.assentosOcupados[assento.getRow()][assento.getCol()] = true;
 						Double valor = cliente.getMeiaEntrada() ? 10.0 : 20.0;
 						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + valor);
+						
+						// Listar
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						model.setRowCount(0); // limpa as linhas da tabela
+						
+						String numeros = String.valueOf(cliente.getCpf());
+						StringBuilder cpfFormatado2 = new StringBuilder();
+						cpfFormatado2.append(numeros.substring(0, 3));
+						cpfFormatado2.append(".");
+						cpfFormatado2.append(numeros.substring(3, 6));
+						cpfFormatado2.append(".");
+						cpfFormatado2.append(numeros.substring(6, 9));
+						cpfFormatado2.append("-");
+						cpfFormatado2.append(numeros.substring(9, 11));
+
+						cpfFormatado2.toString();
+						Object[] row = { cpfFormatado2, cliente.getNome(), valor };
+						model.addRow(row);
+						
 					} else {
 
 						JOptionPane.showMessageDialog(null, "Assento indisponível!");
@@ -283,8 +300,13 @@ public class CadastroAssentos extends JFrame {
 
 
 				var retorno = assentoDAO.listarClienteCadastroNoAssento(assento);
+				
+				if(retorno.getCliente() == null) {
+			        JOptionPane.showMessageDialog(null, "Nenhum cliente está associado ao assento", "Aviso", JOptionPane.WARNING_MESSAGE);
+				}
+				
 				StringBuilder cpfFormatado = new StringBuilder();
-				//String numeros = String.valueOf(retorno.());
+				String numeros = String.valueOf(retorno.getCliente().getCpf());
 				cpfFormatado.append(numeros.substring(0, 3));
 				cpfFormatado.append(".");
 				cpfFormatado.append(numeros.substring(3, 6));
@@ -294,8 +316,9 @@ public class CadastroAssentos extends JFrame {
 				cpfFormatado.append(numeros.substring(9, 11));
 
 				cpfFormatado.toString();
-				//Object[] row = { cpfFormatado, retorno.getNome(),retorno.getPrecoIngresso() };
-				//model.addRow(row);
+				Double valor = retorno.getCliente().getMeiaEntrada() ? 10.0 : 20.0;
+				Object[] row = { cpfFormatado, retorno.getCliente().getNome(), valor };
+				model.addRow(row);
 			}
 			
 		});
@@ -357,32 +380,30 @@ public class CadastroAssentos extends JFrame {
 				JTextField campo2 = new JTextField();
 				painel.add(campo2);
 
-				int opcao = JOptionPane.showOptionDialog(null, painel, "Digite o CPF e NOME para EXCLUSÃO!",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+//				int opcao = JOptionPane.showOptionDialog(null, painel, "Digite o CPF e NOME para EXCLUSÃO!",
+//						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
-				if (opcao == JOptionPane.OK_OPTION) {
-					Long cpf1 = null;
-					String cpf = campo1.getText();
-					cpf = cpf.replace(".", "");
-					cpf = cpf.replace("-", "");
-					cpf = cpf.trim();
-					cpf1 = Long.parseLong(cpf);
-					String nome = campo2.getText();
-
+//				if (opcao == JOptionPane.OK_OPTION) {
+//					Long cpf1 = null;
+//					String cpf = campo1.getText();
+//					cpf = cpf.replace(".", "");
+//					cpf = cpf.replace("-", "");
+//					cpf = cpf.trim();
+//					cpf1 = Long.parseLong(cpf);
+//					String nome = campo2.getText();
+//
 //					if (nome.isEmpty() || cpf.isEmpty()) {
 //						JOptionPane.showMessageDialog(null, "Nome ou CPF nulos!");
 //					} else {
 //						usua.setCpf(cpf1);
 //						usua.setNome(nome);
-//						boolean a = usuarioDAO.remover(usua, assento, assento1, salaN);
-//						if (a) {
-//							JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-//							AssentosA1.assentosOcupados[assento][assento1] = false;
-//						} else {
-//							JOptionPane.showMessageDialog(null, "Erro, CPF ou/e Nome não encontrado!");
-//						}
+						Assento a = assentoDAO.removerClienteDoAssento(assento);
+						
+						JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+						AssentosA1.assentosOcupados[assento.getRow()][assento.getCol()] = false;
+						
 //					}
-				}
+//				}
 
 			}
 		});
@@ -411,28 +432,50 @@ public class CadastroAssentos extends JFrame {
 						JOptionPane.PLAIN_MESSAGE, null, null, null);
 
 				if (opcao == JOptionPane.OK_OPTION) {
-					Long cpf1 = null;
+			
 					String cpf = campo1.getText();
 					cpf = cpf.replace(".", "");
 					cpf = cpf.replace("-", "");
 					cpf = cpf.trim();
-					cpf1 = Long.parseLong(cpf);
+					Long cpfLong = Long.parseLong(cpf);
+					System.out.println(cpfLong);
 					String nome = campo2.getText();
 					
 					if (nome.isEmpty() || cpf.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Nome ou CPF nulos!");
 					} else {
-						usua.setCpf(cpf1);
+						usua.setCpf(cpfLong);
+						System.out.println(usua.getCpf());
 						usua.setNome(nome);
 						boolean isMeia = radioMeia.isSelected();
+						usua.setMeiaEntrada(isMeia);
+						
+						Cliente clientUpdate = assentoDAO.alterarCliente(usua);
+						
+						StringBuilder cpfFormatado = new StringBuilder();
+						String numeros = String.valueOf(clientUpdate.getCpf());
+						cpfFormatado.append(numeros.substring(0, 3));
+						cpfFormatado.append(".");
+						cpfFormatado.append(numeros.substring(3, 6));
+						cpfFormatado.append(".");
+						cpfFormatado.append(numeros.substring(6, 9));
+						cpfFormatado.append("-");
+						cpfFormatado.append(numeros.substring(9, 11));
+						
+						
+						Double valor = clientUpdate.getMeiaEntrada() ? 10.0 : 20.0;
+						Object[] row = { cpfFormatado, clientUpdate.getNome(), valor };
+						
+						
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						model.setRowCount(0); // limpa as linhas da tabela
+						model.addRow(row);
+						if (clientUpdate != null) {
+							JOptionPane.showMessageDialog(null, "Nome e/ou preço alterado!");
+						} else {
+							JOptionPane.showMessageDialog(null, "Erro, CPF não encontrado!");
 
-//						boolean a = usuarioDAO.alterar(usua, assento, assento1, salaN);
-//						if (a) {
-//							JOptionPane.showMessageDialog(null, "Nome e/ou preço alterado!");
-//						} else {
-//							JOptionPane.showMessageDialog(null, "Erro, CPF não encontrado!");
-//
-//						}
+						}
 					}
 				}
 
