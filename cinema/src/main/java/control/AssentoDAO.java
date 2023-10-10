@@ -316,7 +316,7 @@ public class AssentoDAO implements IAssento {
 	        return null;
 	    }
 
-	    String updateSQLCliente = "UPDATE CLIENTE SET cliente_nome = ?WHERE idcliente = ?";
+	    String updateSQLCliente = "UPDATE CLIENTE SET cliente_nome = ? WHERE idcliente = ?";
 	    PreparedStatement psCliente = null;
 	    
 	    try {
