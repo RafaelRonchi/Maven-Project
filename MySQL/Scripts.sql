@@ -7,11 +7,6 @@ CREATE SCHEMA IF NOT EXISTS `cinemapds`;
 USE `cinemapds` ;
 
 -- -----------------------------------------------------
--- Table `cinemapds`.`admin`
--- -----------------------------------------------------
-
-
--- -----------------------------------------------------
 -- Table `cinemapds`.`filme`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemapds`.`filme` (
@@ -42,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `cinemapds`.`sala` (
 CREATE TABLE IF NOT EXISTS `cinemapds`.`cliente` (
   `idcliente` INT NOT NULL AUTO_INCREMENT,
   `cliente_nome` VARCHAR(200) NOT NULL,
-  `cliente_cpf` VARCHAR(14) NOT NULL,
+  `cliente_cpf` VARCHAR(11) NOT NULL,
   `cliente_meia_entrada` TINYINT NOT NULL,
   PRIMARY KEY (`idcliente`));
 
@@ -75,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `cinemapds`.`assento` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemapds`.`funcionario` (
   `id_funcionario` INT NOT NULL AUTO_INCREMENT,
-  `cpf_funcionario` VARCHAR(14) NOT NULL,
+  `cpf_funcionario` VARCHAR(11) NOT NULL,
   `nome_funcionario` VARCHAR(200) NOT NULL,
   `admin_funcionario` tinyint not null,
   PRIMARY KEY (`id_funcionario`));
