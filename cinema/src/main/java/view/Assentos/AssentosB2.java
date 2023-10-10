@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import control.AssentoDAO;
 import main.Main;
 import modelo.Assento;
 import modelo.RoundedPopopMenu;
@@ -37,10 +38,12 @@ import javax.swing.SwingConstants;
 public class AssentosB2 extends JFrame {
 
 	private JPanel contentPane;
-	private JButton[][] assentos;
+	static JButton[][] assentos;
 	public static boolean cor;
 	public static boolean[][] assentosOcupados = new boolean[5][6];
 	Sala salasAssentos = new Sala("B2");
+	private AssentoDAO assentoDAO = AssentoDAO.getInstancia();
+
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +65,7 @@ public class AssentosB2 extends JFrame {
 	 * Create the frame.
 	 */
 	public AssentosB2() {
+		assentosOcupados = assentoDAO.pegarAssentosOcupados(salasAssentos);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AssentosA1.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setBackground(Color.WHITE);
 		setResizable(false);

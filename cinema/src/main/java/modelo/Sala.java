@@ -11,8 +11,12 @@ public class Sala {
 		setNome(nome);
 		setTime(time);
 	}
-	public Sala(String nome) {
-		setNome(nome);
+	public Sala(String Nome1) {
+		setNome(Nome1);
+	}
+	public Sala(String Nome1, int SalaId) {
+		setNome(Nome1);
+		setSalaId(SalaId);
 	}
 	
 	public Filme getFilme() {
