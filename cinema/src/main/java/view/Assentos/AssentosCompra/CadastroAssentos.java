@@ -40,6 +40,16 @@ import modelo.Cliente;
 import net.miginfocom.swing.MigLayout;
 import view.JFrameMain;
 import view.Assentos.AssentosA1;
+import view.Assentos.AssentosA2;
+import view.Assentos.AssentosB1;
+import view.Assentos.AssentosB2;
+import view.Assentos.AssentosC1;
+import view.Assentos.AssentosC2;
+
+
+
+
+
 import view.Filmes.SelecionarFilme;
 
 import javax.swing.JRadioButton;
@@ -60,7 +70,7 @@ public class CadastroAssentos extends JFrame {
 	 */
 
 	public CadastroAssentos(Assento assento) {
-		
+		mudaCorAssento(assento);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(JFrameMain.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -175,10 +185,7 @@ public class CadastroAssentos extends JFrame {
 		btnNewButton.setBackground(new Color(255, 255, 255));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AssentosA1 jMain = new AssentosA1();
-				jMain.setVisible(true);
-				jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
-				dispose();
+				telaVoltar(assento);
 
 			}
 		});
@@ -254,7 +261,7 @@ public class CadastroAssentos extends JFrame {
 					}
 					Assento assentoMedodoCadastro = assentoDAO.cadastrarClienteNoAssento(assento, cliente);
 					if (assentoMedodoCadastro != null) {
-						AssentosA1.assentosOcupados[assento.getRow()][assento.getCol()] = true;
+						
 						Double valor = cliente.getMeiaEntrada() ? 10.0 : 20.0;
 						JOptionPane.showMessageDialog(null, "CPF cadastrado, valor: R$" + valor);
 						
@@ -275,10 +282,11 @@ public class CadastroAssentos extends JFrame {
 						cpfFormatado2.toString();
 						Object[] row = { cpfFormatado2, cliente.getNome(), valor };
 						model.addRow(row);
-						
+		                mudaCorAssento(assento);
+
 					} else {
 
-						JOptionPane.showMessageDialog(null, "Assento indisponível!");
+						JOptionPane.showMessageDialog(null, "Assento indisponível/ O CPF já esta cadastrado!");
 					}
 				}
 
@@ -319,6 +327,7 @@ public class CadastroAssentos extends JFrame {
 				Double valor = retorno.getCliente().getMeiaEntrada() ? 10.0 : 20.0;
 				Object[] row = { cpfFormatado, retorno.getCliente().getNome(), valor };
 				model.addRow(row);
+				mudaCorAssento(assento);
 			}
 			
 		});
@@ -400,7 +409,7 @@ public class CadastroAssentos extends JFrame {
 						Assento a = assentoDAO.removerClienteDoAssento(assento);
 						
 						JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-						AssentosA1.assentosOcupados[assento.getRow()][assento.getCol()] = false;
+						mudaCorAssento(assento);
 						
 //					}
 //				}
@@ -476,12 +485,94 @@ public class CadastroAssentos extends JFrame {
 							JOptionPane.showMessageDialog(null, "Erro, CPF não encontrado!");
 
 						}
+						mudaCorAssento(assento);
 					}
 				}
 
 			}
 		});
 		
+	}
+	
+	public void mudaCorAssento(Assento assento) {
+		switch (assento.getSala().getNome()) {
+		case "A1": {
+			AssentosA1.assentosOcupados[assento.getRow()][assento.getCol()] = assentoDAO.pegarEstadoDoAssento(assento);
+			break;
+		}
+		case "A2": {
+			AssentosA2.assentosOcupados[assento.getRow()][assento.getCol()] = assentoDAO.pegarEstadoDoAssento(assento);
+			break;
+		}
+		case "B1": {
+			AssentosB1.assentosOcupados[assento.getRow()][assento.getCol()] = assentoDAO.pegarEstadoDoAssento(assento);
+			break;
+		}
+		case "B2": {
+			AssentosB2.assentosOcupados[assento.getRow()][assento.getCol()] = assentoDAO.pegarEstadoDoAssento(assento);
+			break;
+		}
+		case "C1": {
+			AssentosC1.assentosOcupados[assento.getRow()][assento.getCol()] = assentoDAO.pegarEstadoDoAssento(assento);
+			break;
+		}
+		case "C2": {
+			AssentosC2.assentosOcupados[assento.getRow()][assento.getCol()] = assentoDAO.pegarEstadoDoAssento(assento);
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Erro ao mudar a cor do assento!");
+		}
+	}
+	
+	
+	public void telaVoltar(Assento assento) {
+		switch (assento.getSala().getNome()) {
+		case "A1": {
+			AssentosA1 jMain = new AssentosA1();
+			jMain.setVisible(true);
+			jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			dispose();
+			break;
+		}
+		case "A2": {
+			AssentosA2 jMain = new AssentosA2();
+			jMain.setVisible(true);
+			jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			dispose();
+			break;
+		}
+		case "B1": {
+			AssentosB1 jMain = new AssentosB1();
+			jMain.setVisible(true);
+			jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			dispose();
+			break;
+		}
+		case "B2": {
+			AssentosB2 jMain = new AssentosB2();
+			jMain.setVisible(true);
+			jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			dispose();
+			break;
+		}
+		case "C1": {
+			AssentosC1 jMain = new AssentosC1();
+			jMain.setVisible(true);
+			jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			dispose();
+			break;
+		}
+		case "C2": {
+			AssentosC2 jMain = new AssentosC2();
+			jMain.setVisible(true);
+			jMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			dispose();
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Erro ao mudar a cor do assento!");
+		}
 	}
 
 }

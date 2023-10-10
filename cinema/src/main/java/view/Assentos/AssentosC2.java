@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import control.AssentoDAO;
 import main.Main;
 import modelo.Assento;
 import modelo.RoundedPopopMenu;
@@ -37,10 +38,12 @@ import javax.swing.SwingConstants;
 public class AssentosC2 extends JFrame {
 
 	private JPanel contentPane;
-	private JButton[][] assentos;
+	static JButton[][] assentos;
 	public static boolean cor;
 	public static boolean[][] assentosOcupados = new boolean[5][6];
 	Sala salasAssentos = new Sala("C2");
+	private AssentoDAO assentoDAO = AssentoDAO.getInstancia();
+
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +65,7 @@ public class AssentosC2 extends JFrame {
 	 * Create the frame.
 	 */
 	public AssentosC2() {
+		assentosOcupados = assentoDAO.pegarAssentosOcupados(salasAssentos);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AssentosA1.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setBackground(Color.WHITE);
 		setResizable(false);
@@ -193,7 +197,7 @@ public class AssentosC2 extends JFrame {
 		lblAssentosA.setForeground(Color.WHITE);
 		lblAssentosA.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 47));
 		contentPane.add(lblAssentosA, "cell 0 1 14 1,grow");
-		
+		assentosOcupados = assentoDAO.pegarAssentosOcupados(salasAssentos);
 		// Crie a matriz de botões
 				assentos = new JButton[5][6];
 
@@ -204,15 +208,20 @@ public class AssentosC2 extends JFrame {
 
 						JButton btn = new JButton("");
 						btn.setIcon(new ImageIcon(AssentosA1.class.getResource("/Images/24868_redmensioned.jpeg")));
+						assentosOcupados = assentoDAO.pegarAssentosOcupados(salasAssentos);
 						btn.setBackground(assentosOcupados[row][col] ? Color.RED : Color.WHITE);
+					
+						
 						assentos[row][col] = btn;
 						contentPane.add(btn, "cell " + (4 + col) + " " + (3 + row) + ",grow");
 
 						btn.addActionListener(new ActionListener() {
+							
 							public void actionPerformed(ActionEvent e) {
 								Assento assentoSelecionado = new Assento(finalRow, finalCol, salasAssentos);
 								
-								CadastroAssentos selctSala = new CadastroAssentos(assentoSelecionado);								dispose();
+								CadastroAssentos selctSala = new CadastroAssentos(assentoSelecionado);		
+								dispose();
 								selctSala.setExtendedState(JFrame.MAXIMIZED_BOTH);
 								selctSala.setVisible(true);
 

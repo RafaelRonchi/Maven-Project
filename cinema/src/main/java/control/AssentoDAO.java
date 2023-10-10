@@ -72,7 +72,6 @@ public class AssentoDAO implements IAssento {
 	    }
 	}
 
-
 	@Override
 	public Assento listarClienteCadastroNoAssento(Assento a) {
 		String selectSQL = "SELECT C.cliente_nome, C.cliente_cpf, C.cliente_meia_entrada " +
@@ -129,9 +128,13 @@ public class AssentoDAO implements IAssento {
 			}
 		}
 	}
-
+	
+	@Override
 	public Cliente cadastrarCliente(Cliente c) {
+
 		// Cadatrar o cliente
+		if(pegarClientePorCPF(c.getCpf()) != null) return null;
+		
 		int clienteId = -1;
 		String insertSQLCliente = "INSERT INTO CLIENTE (cliente_nome, cliente_cpf, cliente_meia_entrada) VALUES (?, ?, ?)";
 		try {
@@ -159,15 +162,19 @@ public class AssentoDAO implements IAssento {
 		}
 
 	}
+	
+	@Override
 	public Assento removerClienteDoAssento(Assento a) {		
-	    String deleteSQLAssento = "DELETE FROM ASSENTO WHERE `row` = ? AND col = ? AND sala_idsala = ? ";
+	    String deleteSQLAssento = "DELETE A FROM ASSENTO A " +
+                "INNER JOIN SALA S ON A.sala_idsala = S.idsala " +
+                "WHERE A.row = ? AND A.col = ? AND S.nome_sala = ? ";
 	    PreparedStatement psAssento = null;
 
 	    try {
 	    	psAssento = conexao.prepareStatement(deleteSQLAssento);
 	        psAssento.setInt(1, a.getRow());
 	        psAssento.setInt(2, a.getCol());
-	        psAssento.setInt(3, a.getSala().getSalaId());
+	        psAssento.setString(3, a.getSala().getNome());
 	        
 	        psAssento.executeUpdate();
 	        
@@ -179,7 +186,18 @@ public class AssentoDAO implements IAssento {
 	    }
 		return null;
 	}
+	
+	@Override
+	public Boolean pegarEstadoDoAssento(Assento a) {		
+		if (listarClienteCadastroNoAssento(a) == null) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 
+	@Override
 	public Sala pegarSala(Sala s) {
 		String getSqlSala = "SELECT * FROM SALA WHERE nome_sala = ?";
 		PreparedStatement psSala = null;
@@ -215,42 +233,52 @@ public class AssentoDAO implements IAssento {
 		return null;
 	}
 	
-	public boolean[][] pegarAssentosOcupados(Sala sala){
-		int row = 5;
-		int col = 6;
-		
-		boolean[][] assentosOcupados = new boolean[row][col];
-		Sala salaExist = pegarSala(sala);
-				
-
-		String selectSQL = "SELECT `row`, col FROM ASSENTO WHERE sala_idsala = ?";
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			preparedStatement = conexao.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, salaExist.getSalaId());
-			resultSet = preparedStatement.executeQuery();
-			
-			if (!resultSet.next())  return assentosOcupados;
-			
-			while (resultSet.next()) {
-				int rowRS = resultSet.getInt("row");
+	@Override
+	public boolean[][] pegarAssentosOcupados(Sala sala) {
+	    int row = 5;
+	    int col = 6;
+	    
+	    boolean[][] assentosOcupados = new boolean[row][col];
+	    Sala salaExist = pegarSala(sala);
+	    
+	    String selectSQL = "SELECT `row`, col FROM ASSENTO WHERE sala_idsala = ?";
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    
+	    try {
+	        preparedStatement = conexao.prepareStatement(selectSQL);
+	        preparedStatement.setInt(1, salaExist.getSalaId());
+	        resultSet = preparedStatement.executeQuery();
+	        
+	        while (resultSet.next()) {
+	            int rowRS = resultSet.getInt("row");
 	            int colRS = resultSet.getInt("col");
-
-	            assentosOcupados[rowRS][colRS] = true;
 	            
-			}
-			return assentosOcupados;
-		} catch (Exception e) {
-			// TODO: handle exception
-			return assentosOcupados;
-		}
-		
+	            assentosOcupados[rowRS][colRS] = true;
+	        }
+	        
+	        return assentosOcupados;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return assentosOcupados;
+	    } finally {
+	        try {
+	            if (resultSet != null) {
+	                resultSet.close();
+	            }
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
-	
+
+	@Override
 	public Cliente alterarCliente(Cliente clienteAtualizado) {
-		System.out.println(clienteAtualizado.getCpf());
+		if(pegarClientePorCPF(clienteAtualizado.getCpf()) != null) return null;
+		
 	    String updateSQLCliente = "UPDATE CLIENTE SET cliente_nome = ?, cliente_meia_entrada = ? WHERE idcliente = ?";
 	    PreparedStatement psCliente = null;
 	    
@@ -284,6 +312,7 @@ public class AssentoDAO implements IAssento {
 	    }
 	}
 	
+	@Override
 	public Cliente pegarClientePorCPF(Long CPF) {
 		 String getSQLCliente = "SELECT * FROM CLIENTE WHERE cliente_cpf = ?";
 		    PreparedStatement psCliente = null;
@@ -317,7 +346,7 @@ public class AssentoDAO implements IAssento {
 		    }
 	}
 
-	
+	@Override
 	public List<Cliente> pegarClientes(){
 		String selectSQL = "SELECT * FROM CLIENTE";
 		PreparedStatement pS = null;
