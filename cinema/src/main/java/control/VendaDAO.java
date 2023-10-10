@@ -10,6 +10,7 @@ import java.util.List;
 
 import Interfaces.IVenda;
 import conexao.ConexaoMySql;
+import main.Main;
 import modelo.Assento;
 import modelo.Cliente;
 import modelo.Funcionario;
@@ -38,23 +39,23 @@ public class VendaDAO implements IVenda{
 	    ResultSet rs = null;
 
 	    try {
-	        ps = conexao.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS); // Specify RETURN_GENERATED_KEYS
+	        ps = conexao.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS); 
 	        ps.setDouble(1, v.getVendaValor());
 	        ps.setInt(2, v.getFuncionario().getId());
 	        ps.setInt(3, v.getCliente().getClienteId());
 	        ps.setInt(4, v.getAssento().getAssentoId());
 
-	        int rowsAffected = ps.executeUpdate(); // Use executeUpdate for INSERT
+	        int rowsAffected = ps.executeUpdate(); 
 
 	        if (rowsAffected > 0) {
 	            rs = ps.getGeneratedKeys();
 	            if (rs.next()) {
-	                v.setIdVenda(rs.getInt(1)); // Retrieve the generated ID
+	                v.setIdVenda(rs.getInt(1)); 
 	            }
 	            return v;
 	        }
 	    } catch (Exception e) {
-	        e.printStackTrace(); // Add proper error handling
+	        e.printStackTrace();
 	    } finally {
 	        try {
 	            if (rs != null) {

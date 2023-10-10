@@ -81,105 +81,9 @@ public class CadastroAssentos extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[119.00px,grow 71][138.00px,grow][170px][151.00][212.00][14.00][54.00px,grow][grow][]", "[grow][53px][grow][41px][9.00px][45px][][][][16.00][55.00px][29.00,grow][grow]"));
-
-		// Profiller
-		JLabel imgLogin = new JLabel("");
-		contentPane.add(imgLogin, "cell 8 0,alignx right,aligny top");
-		
-		ImageIcon imageIcon1 = new ImageIcon(SelecionarFilme.class.getResource("/Images/perfil.png"));
-		imgLogin.setIcon(imageIcon1);
-
-		// Ajusta o tamanho do JLabel para corresponder ao tamanho da imagem redimensionada
-		Image img = imageIcon1.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-		ImageIcon imageResized = new ImageIcon(img);
-		imgLogin.setIcon(imageResized);
-		imgLogin.setSize(80, 80);
-
-		// Criação do JPopupMenu
-		JPopupMenu popupMenu = new RoundedPopopMenu();
-
-		// Obtém os dados do usuário (substitua os valores abaixo pelos dados reais
-		String nomeUsuario = Main.getFuncionarioLogado().getNome();
-		
-		// CPF mascara
-		StringBuilder cpfFormatado = new StringBuilder();
-		String numeros = String.valueOf(Main.getFuncionarioLogado().getCpf());
-		cpfFormatado.append(numeros.substring(0, 3));
-		cpfFormatado.append(".");
-		cpfFormatado.append(numeros.substring(3, 6));
-		cpfFormatado.append(".");
-		cpfFormatado.append(numeros.substring(6, 9));
-		cpfFormatado.append("-");
-		cpfFormatado.append(numeros.substring(9, 11));
-
-		cpfFormatado.toString();
-		String cpfUsuario = String.valueOf(cpfFormatado);
-		double valorVendas = Main.getFuncionarioLogado().getVendasDouble();
-
-		// Criação dos JLabels para exibir as informações
-		JLabel labelNome = new JLabel("Nome: " + nomeUsuario);
-		JLabel labelCPF = new JLabel("CPF: " + cpfUsuario);
-		JLabel labelVendas = new JLabel("Valor total de vendas: R$" + valorVendas);
-
-		// Configurações visuais
-		Font labelFont = new Font("Yu Gothic UI Light", Font.BOLD, 20);
-		
-		Color labelColor = new Color(50, 50, 50);
-		Color verde = new Color(0, 128, 0); // R:0, G:128, B:0
-		Color roxo = new Color(128, 0, 128); // R:128, G:0, B:128
-		Color azul = new Color(0, 0, 255); // R:0, G:0, B:255
-
+		Main.JMenu(contentPane);
 		
 		
-		
-		// Define o espaçamento interno (padding) desejado
-		int padding = 10;
-
-		// Cria um objeto EmptyBorder com o padding especificado
-		Border emptyBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);
-
-		// Define o border do JPopupMenu com o EmptyBorder
-		popupMenu.setBorder(emptyBorder);
-		
-		// Aplica as configurações visuais aos JLabels
-		labelNome.setFont(labelFont);
-		labelCPF.setFont(labelFont);
-		labelVendas.setFont(labelFont);
-		labelNome.setForeground(roxo);
-		labelCPF.setForeground(azul);
-		labelVendas.setForeground(verde);
-		labelNome.setPreferredSize(new Dimension(300, 100));
-		labelCPF.setPreferredSize(new Dimension(300, 100));
-		labelVendas.setPreferredSize(new Dimension(300, 100));
-
-		// Adiciona os JLabels ao JPopupMenu
-		popupMenu.add(new JLabel("Olá funcionário!"));
-		popupMenu.addSeparator();
-		popupMenu.add(labelNome);
-		popupMenu.add(labelCPF);
-		popupMenu.add(labelVendas);
-
-		// Configura a aparência dos itens do menu
-		for (Component menuItem : popupMenu.getComponents()) {
-		    if (menuItem instanceof JLabel) {
-		        ((JLabel) menuItem).setFont(labelFont);
-		        ((JLabel) menuItem).setForeground(labelColor);
-		    }
-		}
-
-		// Define a cor de fundo do JPopupMenu
-		popupMenu.setBackground(Color.WHITE);
-
-		// Listener para exibir o menu ao clicar no ícone
-		imgLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        popupMenu.show(imgLogin, 0, imgLogin.getHeight());
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        popupMenu.setVisible(false);
-		    }
-		});
 		
 		JButton btnNewButton = new JButton("Voltar");
 		btnNewButton.setBackground(new Color(255, 255, 255));
@@ -419,7 +323,7 @@ public class CadastroAssentos extends JFrame {
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cliente usua = new Cliente();
-				JRadioButton radioMeia = new JRadioButton("Meia-entrada");
+			
 				MaskFormatter cpfFormatter = null;
 				try {
 					cpfFormatter = new MaskFormatter("###.###.###-##");
@@ -435,9 +339,8 @@ public class CadastroAssentos extends JFrame {
 				painel.add(campo1);
 				painel.add(new JLabel("Nome:"));
 				painel.add(campo2);
-				painel.add(radioMeia); // Add the radio button to the panel
 				int opcao = JOptionPane.showOptionDialog(null, painel,
-						"Digite o CPF e informe o nome e preço para alterar", JOptionPane.OK_CANCEL_OPTION,
+						"Digite o CPF e informe o nome para alterar", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE, null, null, null);
 
 				if (opcao == JOptionPane.OK_OPTION) {
@@ -456,8 +359,6 @@ public class CadastroAssentos extends JFrame {
 						usua.setCpf(cpfLong);
 						System.out.println(usua.getCpf());
 						usua.setNome(nome);
-						boolean isMeia = radioMeia.isSelected();
-						usua.setMeiaEntrada(isMeia);
 						
 						Cliente clientUpdate = assentoDAO.alterarCliente(usua);
 						

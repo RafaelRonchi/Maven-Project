@@ -1,7 +1,6 @@
 use cinemapds;
 
 ## Inserts
-insert into admin (admin_login, admin_pass) values ("admin", "admin");
 Insert into filme (filme_nome) values ("Jonh Wick"), ("Gato de botas"), ("Mario");
 
 insert into sala (nome_sala, sala_horario, filme_idfilme) values ("A1", "10:00", 1);
@@ -13,7 +12,7 @@ insert into sala (nome_sala, sala_horario, filme_idfilme) values ("B2", "12:20",
 insert into sala (nome_sala, sala_horario, filme_idfilme) values ("C1", "06:50", 3);
 insert into sala (nome_sala, sala_horario, filme_idfilme) values ("C2", "23:20", 3);
 
-INSERT INTO FUNCIONARIO (cpf_funcionario, nome_funcionario, funcionario_valor_vendas, admin_funcionario) VALUES ("66666666666", "banco", "100.90", 1);
+INSERT INTO FUNCIONARIO (cpf_funcionario, nome_funcionario, admin_funcionario) VALUES ("66666666666", "banco", 1);
 
 ## Selects 
 select * from admin;

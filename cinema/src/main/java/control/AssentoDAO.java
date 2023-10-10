@@ -17,6 +17,7 @@ import modelo.Funcionario;
 import java.sql.Statement;
 
 import modelo.Sala;
+import modelo.SessaoFuncionario;
 import modelo.Venda;
 
 public class AssentoDAO implements IAssento {
@@ -24,7 +25,6 @@ public class AssentoDAO implements IAssento {
 	private static Connection conexao;
 	private static ArrayList<Assento> assento = new ArrayList<>();
 	private VendaDAO vendaDAO = VendaDAO.getInstancia();
-	private Funcionario FuncionarioLogado = Main.getFuncionarioLogado();
 	private AssentoDAO() {
 		conexao = ConexaoMySql.getConexao();
 	}
@@ -70,11 +70,9 @@ public class AssentoDAO implements IAssento {
 	        }
 	        
 	        Double valor = c.getMeiaEntrada() ? 10.0 : 20.0;
-	        Venda venda = new Venda(valor, FuncionarioLogado, c, a);
+	        Venda venda = new Venda(valor, SessaoFuncionario.getFuncionarioLogado(), c, a);
+	        vendaDAO.cadastrarVenda(venda);
 	        
-	        if(vendaDAO.cadastrarVenda(venda) != null) {
-	        	Main.setVendas(valor);
-	        }
 	        psAssento.close();
 	        return a;
 	    } catch (Exception e) {
@@ -312,19 +310,19 @@ public class AssentoDAO implements IAssento {
 
 	@Override
 	public Cliente alterarCliente(Cliente clienteAtualizado) {
-		if(pegarClientePorCPF(clienteAtualizado.getCpf()) != null) return null;
-		
-	    String updateSQLCliente = "UPDATE CLIENTE SET cliente_nome = ?, cliente_meia_entrada = ? WHERE idcliente = ?";
+	    Cliente existente = pegarClientePorCPF(clienteAtualizado.getCpf());
+	    
+	    if (existente == null) {
+	        return null;
+	    }
+
+	    String updateSQLCliente = "UPDATE CLIENTE SET cliente_nome = ?WHERE idcliente = ?";
 	    PreparedStatement psCliente = null;
 	    
-	    Cliente existCliente = pegarClientePorCPF(clienteAtualizado.getCpf());
-	    System.out.println(existCliente.getClienteId());
-	    clienteAtualizado.setClienteId(existCliente.getClienteId());
 	    try {
 	        psCliente = conexao.prepareStatement(updateSQLCliente);
 	        psCliente.setString(1, clienteAtualizado.getNome());
-	        psCliente.setBoolean(2, clienteAtualizado.getMeiaEntrada());
-	        psCliente.setInt(3, clienteAtualizado.getClienteId());
+	        psCliente.setInt(2, existente.getClienteId());
 
 	        int rowsAffected = psCliente.executeUpdate();
 
@@ -346,6 +344,7 @@ public class AssentoDAO implements IAssento {
 	        }
 	    }
 	}
+
 	
 	@Override
 	public Cliente pegarClientePorCPF(Long CPF) {
@@ -355,7 +354,6 @@ public class AssentoDAO implements IAssento {
 		    
 		    try {
 		        psCliente = conexao.prepareStatement(getSQLCliente);
-		        System.out.println(CPF);
 		        psCliente.setString(1, CPF.toString());
 
 		        rS = psCliente.executeQuery();
@@ -375,11 +373,16 @@ public class AssentoDAO implements IAssento {
 		            if (psCliente != null) {
 		                psCliente.close();
 		            }
+		            if (rS != null) {
+		            	rS.close();
+		            }
 		        } catch (SQLException e) {
 		            e.printStackTrace();
 		        }
 		    }
 	}
+	
+	
 
 	@Override
 	public List<Cliente> pegarClientes(){

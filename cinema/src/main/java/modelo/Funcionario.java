@@ -8,22 +8,29 @@ public class Funcionario {
 	private Double vendasDouble;	
 	private Boolean admin;
 	
-	public Funcionario(long Cpf, String Nome) {
+	public Funcionario(Long Cpf, String Nome) {
 		cpf = Cpf;
 		nome = Nome;
 		vendasDouble = 0.00;
 	}
 	
-	public Funcionario(long Cpf, String Nome, Double Vendas) {
+	public Funcionario(Long Cpf, String Nome, Double Vendas) {
 		cpf = Cpf;
 		nome = Nome;
 		vendasDouble = Vendas;
 	}
-	public Funcionario(long Cpf, String Nome, Double Vendas, Boolean Admin) {
+	public Funcionario(Long Cpf, String Nome, Double Vendas, Boolean Admin) {
 		cpf = Cpf;
 		nome = Nome;
 		vendasDouble = Vendas;
 		admin = Admin;
+	}
+	
+	public Funcionario(Long Cpf, String Nome, Boolean Admin) {
+		cpf = Cpf;
+		nome = Nome;
+		admin = Admin;
+		vendasDouble = 0.00;
 	}
 	
 	public Funcionario(int Id) {

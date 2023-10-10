@@ -182,8 +182,8 @@ public class JFrameMain extends JFrame {
 								Funcionario nFuncionario = new Funcionario(cpf1, user);
 
 								if(funcionarioDAO.verificarLogin(nFuncionario)) {
-									
 									SelecionarFilme sf = new SelecionarFilme();
+									
 									dispose(); // fecha tela atual
 									sf.setVisible(true);
 									sf.setExtendedState(JFrame.MAXIMIZED_BOTH);
