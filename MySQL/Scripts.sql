@@ -88,16 +88,9 @@ CREATE TABLE IF NOT EXISTS `cinemapds`.`venda` (
   PRIMARY KEY (`idvenda`),
   INDEX `fk_venda_funcionario1` (`funcionario_id_funcionario` ASC) VISIBLE,
   INDEX `fk_venda_cliente1` (`cliente_idcliente` ASC) VISIBLE,
-  INDEX `fk_venda_assento1` (`assento_idassento` ASC) VISIBLE,
-  CONSTRAINT `fk_venda_assento1`
-    FOREIGN KEY (`assento_idassento`)
-    REFERENCES `cinemapds`.`assento` (`idassento`)
-    ON DELETE CASCADE,
   CONSTRAINT `fk_venda_cliente1`
     FOREIGN KEY (`cliente_idcliente`)
-    REFERENCES `cinemapds`.`cliente` (`idcliente`)
-    ON DELETE CASCADE,
+    REFERENCES `cinemapds`.`cliente` (`idcliente`),
   CONSTRAINT `fk_venda_funcionario1`
     FOREIGN KEY (`funcionario_id_funcionario`)
-    REFERENCES `cinemapds`.`funcionario` (`id_funcionario`)
-    ON DELETE CASCADE);
+    REFERENCES `cinemapds`.`funcionario` (`id_funcionario`));
