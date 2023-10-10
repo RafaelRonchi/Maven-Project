@@ -78,7 +78,7 @@ public class AssentosC2 extends JFrame {
 	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	    setContentPane(contentPane);
 	    contentPane.setLayout(new MigLayout("", "[47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow][47px,grow]", "[49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow][49px,grow]"));
-	    Main.JMenu(contentPane);
+	    Main.JMenuAssentos(contentPane);
 		
 	    
 		JButton btnNewButton = new JButton("Voltar");
