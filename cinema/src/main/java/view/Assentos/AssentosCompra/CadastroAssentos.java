@@ -323,7 +323,7 @@ public class CadastroAssentos extends JFrame {
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cliente usua = new Cliente();
-				JRadioButton radioMeia = new JRadioButton("Meia-entrada");
+			
 				MaskFormatter cpfFormatter = null;
 				try {
 					cpfFormatter = new MaskFormatter("###.###.###-##");
@@ -339,9 +339,8 @@ public class CadastroAssentos extends JFrame {
 				painel.add(campo1);
 				painel.add(new JLabel("Nome:"));
 				painel.add(campo2);
-				painel.add(radioMeia); // Add the radio button to the panel
 				int opcao = JOptionPane.showOptionDialog(null, painel,
-						"Digite o CPF e informe o nome e preço para alterar", JOptionPane.OK_CANCEL_OPTION,
+						"Digite o CPF e informe o nome para alterar", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE, null, null, null);
 
 				if (opcao == JOptionPane.OK_OPTION) {
@@ -360,8 +359,6 @@ public class CadastroAssentos extends JFrame {
 						usua.setCpf(cpfLong);
 						System.out.println(usua.getCpf());
 						usua.setNome(nome);
-						boolean isMeia = radioMeia.isSelected();
-						usua.setMeiaEntrada(isMeia);
 						
 						Cliente clientUpdate = assentoDAO.alterarCliente(usua);
 						

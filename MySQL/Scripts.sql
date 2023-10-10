@@ -77,7 +77,6 @@ CREATE TABLE IF NOT EXISTS `cinemapds`.`funcionario` (
   `id_funcionario` INT NOT NULL AUTO_INCREMENT,
   `cpf_funcionario` VARCHAR(14) NOT NULL,
   `nome_funcionario` VARCHAR(200) NOT NULL,
-  `funcionario_valor_vendas` DOUBLE NOT NULL,
   `admin_funcionario` tinyint not null,
   PRIMARY KEY (`id_funcionario`));
 
