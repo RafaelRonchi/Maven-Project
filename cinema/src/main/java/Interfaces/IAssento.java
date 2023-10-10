@@ -4,6 +4,7 @@ import java.util.List;
 
 import modelo.Assento;
 import modelo.Cliente;
+import modelo.Funcionario;
 import modelo.Sala;
 
 public interface IAssento {

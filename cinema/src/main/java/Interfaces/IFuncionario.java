@@ -11,6 +11,6 @@ public interface IFuncionario {
 	 boolean alterar(Funcionario novoFuncionario);
 	 boolean verificarLogin(Funcionario f);
 	 Funcionario verificarFuncionarioAdmin(Funcionario f);
-	 Funcionario getFuncionarioCPF(String cpf);
+	 Funcionario getFuncionarioCPF(Long cpf);
 	ArrayList<Funcionario> listarFuncionario();
 }

@@ -1,7 +1,6 @@
 use cinemapds;
 
 ## Inserts
-insert into admin (admin_login, admin_pass) values ("admin", "admin");
 Insert into filme (filme_nome) values ("Jonh Wick"), ("Gato de botas"), ("Mario");
 
 insert into sala (nome_sala, sala_horario, filme_idfilme) values ("A1", "10:00", 1);

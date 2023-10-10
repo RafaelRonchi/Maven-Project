@@ -329,7 +329,10 @@ public class CadastrarFuncionario extends JFrame {
 
 		        for (Funcionario funcionario : lista) {
 		            String cpfFormatado = formatarCPF(funcionario.getCpf());
+		            
+		            funcionario.setVendasDouble(funcionarioDAO.pegarValorVendasFuncionario(funcionarioDAO.getFuncionarioCPF(funcionario.getCpf())));
 		            String isAdmin = funcionario.getAdmin() ? "Sim" : "Não";
+		            
 		            Object[] row = { cpfFormatado, funcionario.getNome(), funcionario.getVendasDouble(), isAdmin };
 		            model.addRow(row);
 		        }

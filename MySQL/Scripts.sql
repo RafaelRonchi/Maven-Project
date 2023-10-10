@@ -9,11 +9,6 @@ USE `cinemapds` ;
 -- -----------------------------------------------------
 -- Table `cinemapds`.`admin`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cinemapds`.`admin` (
-  `idadmin` INT NOT NULL AUTO_INCREMENT,
-  `admin_login` VARCHAR(5) NOT NULL,
-  `admin_pass` VARCHAR(5) NOT NULL,
-  PRIMARY KEY (`idadmin`));
 
 
 -- -----------------------------------------------------

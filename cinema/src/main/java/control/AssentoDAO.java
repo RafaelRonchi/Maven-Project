@@ -71,10 +71,8 @@ public class AssentoDAO implements IAssento {
 	        
 	        Double valor = c.getMeiaEntrada() ? 10.0 : 20.0;
 	        Venda venda = new Venda(valor, FuncionarioLogado, c, a);
+	        vendaDAO.cadastrarVenda(venda);
 	        
-	        if(vendaDAO.cadastrarVenda(venda) != null) {
-	        	Main.setVendas(valor);
-	        }
 	        psAssento.close();
 	        return a;
 	    } catch (Exception e) {
@@ -355,7 +353,6 @@ public class AssentoDAO implements IAssento {
 		    
 		    try {
 		        psCliente = conexao.prepareStatement(getSQLCliente);
-		        System.out.println(CPF);
 		        psCliente.setString(1, CPF.toString());
 
 		        rS = psCliente.executeQuery();
@@ -375,11 +372,16 @@ public class AssentoDAO implements IAssento {
 		            if (psCliente != null) {
 		                psCliente.close();
 		            }
+		            if (rS != null) {
+		            	rS.close();
+		            }
 		        } catch (SQLException e) {
 		            e.printStackTrace();
 		        }
 		    }
 	}
+	
+	
 
 	@Override
 	public List<Cliente> pegarClientes(){

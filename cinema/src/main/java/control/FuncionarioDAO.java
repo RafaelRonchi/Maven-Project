@@ -36,7 +36,7 @@ public class FuncionarioDAO implements IFuncionario{
 
 	@Override
 	public boolean inserir(Funcionario f) {
-		Funcionario funcionarioExist = getFuncionarioCPF(f.getCpf().toString());
+		Funcionario funcionarioExist = getFuncionarioCPF(f.getCpf());
 		
 		if(funcionarioExist != null) {
 			return false;
@@ -154,10 +154,9 @@ public class FuncionarioDAO implements IFuncionario{
 	            // Cria um novo objeto Funcionario com os dados do resultado da consulta
 	            Funcionario funcionarioEncontrado = new Funcionario();
 	            funcionarioEncontrado.setId(rs.getInt("id_funcionario"));
-	            funcionarioEncontrado.setCpf(rs.getLong("cpf_funcionario"));
+	            funcionarioEncontrado.setCpf(Long.parseLong( rs.getString("cpf_funcionario")));
 	            funcionarioEncontrado.setNome(rs.getString("nome_funcionario"));
 	            funcionarioEncontrado.setVendasDouble(rs.getDouble("funcionario_valor_vendas"));
-	            
 	            Main.setFuncionarioLogado(funcionarioEncontrado);
 	            
 	            return true;
@@ -268,20 +267,20 @@ public class FuncionarioDAO implements IFuncionario{
 	}
 
 	@Override
-	public Funcionario getFuncionarioCPF(String cpf) {
+	public Funcionario getFuncionarioCPF(Long cpf) {
 		String query = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 	         ps = conexao.prepareStatement(query);
-	        ps.setString(1, cpf);
+	        ps.setString(1, cpf.toString());
 	        rs = ps.executeQuery();
 
 	        if (rs.next()) {
 	            Funcionario funcionarioEncontrado = new Funcionario();
-	            funcionarioEncontrado.setCpf(rs.getLong("cpf_funcionario"));
+	            funcionarioEncontrado.setId(rs.getInt("id_funcionario"));
+	            funcionarioEncontrado.setCpf(Long.parseLong(rs.getString("cpf_funcionario")));
 	            funcionarioEncontrado.setNome(rs.getString("nome_funcionario"));
-	            funcionarioEncontrado.setVendasDouble(rs.getDouble("funcionario_valor_vendas"));
 	            funcionarioEncontrado.setAdmin(rs.getBoolean("admin_funcionario"));
 	            
 	            	
@@ -306,6 +305,40 @@ public class FuncionarioDAO implements IFuncionario{
 	    }	    
 	    
 	    return null; 
+	}
+	
+	public Double pegarValorVendasFuncionario(Funcionario funcionario) {
+		String query = "SELECT venda_valor FROM VENDA WHERE funcionario_id_funcionario = ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Double valorVendas = 0.0;
+		try {
+	        ps = conexao.prepareStatement(query);
+	        ps.setInt(1, funcionario.getId());
+	        rs = ps.executeQuery();
+
+	        while(rs.next()) {
+	        	valorVendas += rs.getDouble("venda_valor");
+	        }
+	        return valorVendas;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }	    
+	    
+		return valorVendas;
+		
 	}
 
 
