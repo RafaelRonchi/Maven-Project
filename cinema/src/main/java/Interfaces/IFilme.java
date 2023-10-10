@@ -2,7 +2,7 @@ package Interfaces;
 
 import java.util.ArrayList;
 
-import modelo.Filme;
+import model.Filme;
 
 public interface IFilme {
 	public ArrayList<Filme> mostraFilme();

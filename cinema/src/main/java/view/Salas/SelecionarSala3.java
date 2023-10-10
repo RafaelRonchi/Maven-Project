@@ -15,10 +15,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import control.SalaDAO;
+import controller.SalaDAO;
 import main.Main;
-import modelo.RoundedPopopMenu;
-import modelo.Sala;
+import model.RoundedPopopMenu;
+import model.Sala;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;

@@ -2,14 +2,14 @@ package view;
 
 import java.awt.EventQueue;
 import main.Main;
+import model.Funcionario;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import control.FuncionarioDAO;
-import modelo.Funcionario;
+import controller.FuncionarioDAO;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

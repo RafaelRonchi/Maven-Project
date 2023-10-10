@@ -31,12 +31,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import control.AssentoDAO;
-
+import controller.AssentoDAO;
 import main.Main;
-import modelo.RoundedPopopMenu;
-import modelo.Assento;
-import modelo.Cliente;
+import model.Assento;
+import model.Cliente;
+import model.RoundedPopopMenu;
 import net.miginfocom.swing.MigLayout;
 import view.JFrameMain;
 import view.Assentos.AssentosA1;

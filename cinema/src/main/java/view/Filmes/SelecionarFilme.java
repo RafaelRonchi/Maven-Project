@@ -10,10 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import control.FilmeDAO;
+import controller.FilmeDAO;
 import main.Main;
-import modelo.Filme;
-import modelo.RoundedPopopMenu;
+import model.Filme;
+import model.RoundedPopopMenu;
 
 import java.awt.SystemColor;
 import java.awt.Color;

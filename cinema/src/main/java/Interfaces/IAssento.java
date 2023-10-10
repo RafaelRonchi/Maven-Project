@@ -2,10 +2,10 @@ package Interfaces;
 
 import java.util.List;
 
-import modelo.Assento;
-import modelo.Cliente;
-import modelo.Funcionario;
-import modelo.Sala;
+import model.Assento;
+import model.Cliente;
+import model.Funcionario;
+import model.Sala;
 
 public interface IAssento {
 	Assento cadastrarClienteNoAssento(Assento a, Cliente c);

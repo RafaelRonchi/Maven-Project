@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 public class SessaoFuncionario {
 	private static Funcionario funcionarioLogado;

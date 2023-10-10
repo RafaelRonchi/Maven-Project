@@ -2,7 +2,7 @@ package Interfaces;
 
 import java.util.List;
 
-import modelo.Venda;
+import model.Venda;
 
 public interface IVenda {
 	Venda cadastrarVenda(Venda v);

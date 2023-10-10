@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import control.FuncionarioDAO;
-import modelo.Funcionario;
+import controller.FuncionarioDAO;
+import model.Funcionario;
 
 public class FuncionarioDAOTest {
 	@Test 

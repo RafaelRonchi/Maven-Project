@@ -1,4 +1,4 @@
-package control;
+package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import com.mysql.cj.xdevapi.PreparableStatement;
 
 import Interfaces.IFuncionario;
-import conexao.ConexaoMySql;
+import connection.ConexaoMySql;
 import main.Main;
-import modelo.Funcionario;
-import modelo.SessaoFuncionario;
+import model.Funcionario;
+import model.SessaoFuncionario;
 
 public class FuncionarioDAO implements IFuncionario{
 	  private static FuncionarioDAO instancia;
@@ -74,13 +74,13 @@ public class FuncionarioDAO implements IFuncionario{
 	}
 	@Override
 	public boolean remover(Funcionario f) {
-	    String deleteSQL = "DELETE FROM FUNCIONARIO WHERE cpf_funcionario = ?";
+	    String deleteSQL = "DELETE FROM FUNCIONARIO WHERE cpf_funcionario = ? and nome_funcionario = ?";
 	    PreparedStatement ps = null;
 	    
 	    try {
 			ps = conexao.prepareStatement(deleteSQL);
 			ps.setString(1, String.valueOf(f.getCpf()));
-			
+			ps.setString(2, f.getNome());
 			int rowsAffected = ps.executeUpdate();
 	        ps.close();
 	        
@@ -140,13 +140,14 @@ public class FuncionarioDAO implements IFuncionario{
 	
 	@Override
 	public boolean verificarLogin(Funcionario funcionario) {
-	    String selectSQL = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ? ";
+	    String selectSQL = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ? and nome_funcionario = ?";
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 
 	    try {
 	        ps = conexao.prepareStatement(selectSQL);
 	        ps.setLong(1, funcionario.getCpf());
+	        ps.setString(2, funcionario.getNome());
 	        rs = ps.executeQuery();
 
 	        if (rs.next()) {
@@ -220,13 +221,14 @@ public class FuncionarioDAO implements IFuncionario{
 
 	@Override
 	public Funcionario verificarFuncionarioAdmin(Funcionario f) {
-		String selectSQL = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ?";
+		String selectSQL = "SELECT * FROM FUNCIONARIO WHERE cpf_funcionario = ? and nome_funcionario = ?";
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 
 	    try {
 	        ps = conexao.prepareStatement(selectSQL);
 	        ps.setLong(1, f.getCpf());
+	        ps.setString(2, f.getNome());
 	        rs = ps.executeQuery();
 
 	        if (rs.next()) {

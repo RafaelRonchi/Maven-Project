@@ -26,8 +26,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import control.FuncionarioDAO;
-import modelo.Funcionario;
+import controller.FuncionarioDAO;
+import model.Funcionario;
 import net.miginfocom.swing.MigLayout;
 import view.JFrameMain;
 import javax.swing.JRadioButton;

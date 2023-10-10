@@ -1,4 +1,4 @@
-package control;
+package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Interfaces.IVenda;
-import conexao.ConexaoMySql;
+import connection.ConexaoMySql;
 import main.Main;
-import modelo.Assento;
-import modelo.Cliente;
-import modelo.Funcionario;
-import modelo.Venda;
+import model.Assento;
+import model.Cliente;
+import model.Funcionario;
+import model.Venda;
 
 public class VendaDAO implements IVenda{
 	private static VendaDAO instancia;

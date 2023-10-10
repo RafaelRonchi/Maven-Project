@@ -2,7 +2,7 @@ package Interfaces;
 
 import java.util.ArrayList;
 
-import modelo.Sala;
+import model.Sala;
 
 public interface ISala {
 	
