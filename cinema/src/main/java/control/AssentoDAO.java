@@ -81,6 +81,17 @@ public class AssentoDAO implements IAssento {
 	        e.printStackTrace();
 	        return null;
 	    }
+	    finally {
+	        try {
+	         
+	            if (psAssento != null) {
+	            	psAssento.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
 	}
 
 	@Override
@@ -171,6 +182,9 @@ public class AssentoDAO implements IAssento {
 			e.printStackTrace();
 			return null;
 		}
+		finally {
+	        // Já fechou
+	    }
 
 	}
 	
@@ -195,6 +209,16 @@ public class AssentoDAO implements IAssento {
 	        e.printStackTrace();
 	      
 	    }
+	    finally {
+			try {
+				
+				if (psAssento != null) {
+					psAssento.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 	
@@ -377,6 +401,18 @@ public class AssentoDAO implements IAssento {
 	
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+		finally {
+			try {
+				if (rS != null) {
+					rS.close();
+				}
+				if (pS != null) {
+					pS.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return clientes;
 	}

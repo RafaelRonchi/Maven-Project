@@ -60,7 +60,15 @@ public class FuncionarioDAO implements IFuncionario{
 			// TODO: handle exception
 			e.printStackTrace();
 			return false;
-		}
+		} finally {
+	        try {
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 		
 		
 
@@ -85,7 +93,16 @@ public class FuncionarioDAO implements IFuncionario{
 		} catch (Exception e) {
 			 e.printStackTrace();	
 			 return false;
-		}
+		} finally {
+	        try {
+	      
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 
 	@Override
@@ -109,6 +126,16 @@ public class FuncionarioDAO implements IFuncionario{
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return false;
+	    } 
+	    finally {
+	        try {
+	            
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 	    }
 	}
 	
