@@ -126,6 +126,7 @@ public class FuncionarioDAO implements IFuncionario{
 	        if (rs.next()) {
 	            // Cria um novo objeto Funcionario com os dados do resultado da consulta
 	            Funcionario funcionarioEncontrado = new Funcionario();
+	            funcionarioEncontrado.setId(rs.getInt("id_funcionario"));
 	            funcionarioEncontrado.setCpf(rs.getLong("cpf_funcionario"));
 	            funcionarioEncontrado.setNome(rs.getString("nome_funcionario"));
 	            funcionarioEncontrado.setVendasDouble(rs.getDouble("funcionario_valor_vendas"));

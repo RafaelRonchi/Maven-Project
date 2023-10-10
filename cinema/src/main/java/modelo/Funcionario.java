@@ -2,6 +2,7 @@ package modelo;
 
 
 public class Funcionario {
+	private int id;
 	private Long cpf;
 	private String nome;
 	private Double vendasDouble;	
@@ -23,6 +24,10 @@ public class Funcionario {
 		nome = Nome;
 		vendasDouble = Vendas;
 		admin = Admin;
+	}
+	
+	public Funcionario(int Id) {
+		setId(Id);
 	}
 	public Funcionario() {
 		
@@ -56,6 +61,14 @@ public class Funcionario {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

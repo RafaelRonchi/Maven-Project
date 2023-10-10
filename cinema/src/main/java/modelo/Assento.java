@@ -12,6 +12,10 @@ public class Assento {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Assento(int AssentoId) {
+		setAssentoId(AssentoId);
+	}
+	
 	public Assento(int Row, int Col, Sala Sala) {
 		setRow(Row); 
 		setCol(Col);

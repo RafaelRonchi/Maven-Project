@@ -9,17 +9,22 @@ import java.util.List;
 
 import Interfaces.IAssento;
 import conexao.ConexaoMySql;
+import main.Main;
 import modelo.Assento;
 import modelo.Cliente;
+import modelo.Funcionario;
+
 import java.sql.Statement;
 
 import modelo.Sala;
+import modelo.Venda;
 
 public class AssentoDAO implements IAssento {
 	private static AssentoDAO instancia;
 	private static Connection conexao;
 	private static ArrayList<Assento> assento = new ArrayList<>();
-
+	private VendaDAO vendaDAO = VendaDAO.getInstancia();
+	private Funcionario FuncionarioLogado = Main.getFuncionarioLogado();
 	private AssentoDAO() {
 		conexao = ConexaoMySql.getConexao();
 	}
@@ -63,7 +68,13 @@ public class AssentoDAO implements IAssento {
 	        if (generatedKeys.next()) {
 	        	a.setAssentoId(generatedKeys.getInt(1));
 	        }
-
+	        
+	        Double valor = c.getMeiaEntrada() ? 10.0 : 20.0;
+	        Venda venda = new Venda(valor, FuncionarioLogado, c, a);
+	        
+	        if(vendaDAO.cadastrarVenda(venda) != null) {
+	        	Main.setVendas(valor);
+	        }
 	        psAssento.close();
 	        return a;
 	    } catch (Exception e) {

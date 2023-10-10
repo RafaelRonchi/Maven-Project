@@ -7,6 +7,10 @@ public class Cliente extends Funcionario{
 	    private Boolean meiaEntrada;
 	    private int clienteId;
 	    public Cliente() {}
+	    
+	    public Cliente(int ClienteId) {
+	    	setClienteId(ClienteId);
+	    }
 	    public Cliente(Long cpf, String nome, Boolean meiaEntrada) {
 	        this.cpf = cpf;
 	        this.nome = nome;
