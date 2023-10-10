@@ -11,11 +11,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import control.AssentoDAO;
+import controller.AssentoDAO;
 import main.Main;
-import modelo.Assento;
-import modelo.RoundedPopopMenu;
-import modelo.Sala;
+import model.Assento;
+import model.RoundedPopopMenu;
+import model.Sala;
 
 import javax.swing.JLabel;
 import java.awt.Font;

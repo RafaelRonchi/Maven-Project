@@ -7,9 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import control.FuncionarioDAO;
-import modelo.Funcionario;
-import modelo.ClsRedimensionarImagem;
+import controller.FuncionarioDAO;
+import model.ClsRedimensionarImagem;
+import model.Funcionario;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;

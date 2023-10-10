@@ -2,7 +2,7 @@ package Interfaces;
 
 import java.util.ArrayList;
 
-import modelo.Funcionario;
+import model.Funcionario;
 
 public interface IFuncionario {
 	

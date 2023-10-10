@@ -1,4 +1,4 @@
-package control;
+package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import com.mysql.cj.xdevapi.PreparableStatement;
 
 import Interfaces.IFuncionario;
-import conexao.ConexaoMySql;
+import connection.ConexaoMySql;
 import main.Main;
-import modelo.Funcionario;
-import modelo.SessaoFuncionario;
+import model.Funcionario;
+import model.SessaoFuncionario;
 
 public class FuncionarioDAO implements IFuncionario{
 	  private static FuncionarioDAO instancia;

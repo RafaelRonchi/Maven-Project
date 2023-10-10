@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 public class Assento {
 	private int assentoId;

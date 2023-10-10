@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 public class Cliente extends Funcionario{
 	

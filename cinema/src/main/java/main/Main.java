@@ -13,10 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 
-import control.FuncionarioDAO;
-import modelo.Funcionario;
-import modelo.RoundedPopopMenu;
-import modelo.SessaoFuncionario;
+import controller.FuncionarioDAO;
+import model.Funcionario;
+import model.RoundedPopopMenu;
+import model.SessaoFuncionario;
 import view.JFrameMain;
 import view.Filmes.SelecionarFilme;
 

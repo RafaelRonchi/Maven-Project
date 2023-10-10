@@ -1,4 +1,4 @@
-package control;
+package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,17 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Interfaces.IAssento;
-import conexao.ConexaoMySql;
+import connection.ConexaoMySql;
 import main.Main;
-import modelo.Assento;
-import modelo.Cliente;
-import modelo.Funcionario;
+import model.Assento;
+import model.Cliente;
+import model.Funcionario;
+import model.Sala;
+import model.SessaoFuncionario;
+import model.Venda;
 
 import java.sql.Statement;
-
-import modelo.Sala;
-import modelo.SessaoFuncionario;
-import modelo.Venda;
 
 public class AssentoDAO implements IAssento {
 	private static AssentoDAO instancia;

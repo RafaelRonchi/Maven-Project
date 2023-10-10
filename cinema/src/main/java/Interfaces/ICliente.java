@@ -2,7 +2,7 @@ package Interfaces;
 
 import java.util.ArrayList;
 
-import modelo.Cliente;
+import model.Cliente;
 
 public interface ICliente {
 	public boolean inserir(Cliente u, String sala, Integer row, Integer col);
