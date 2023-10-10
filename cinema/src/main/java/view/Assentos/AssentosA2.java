@@ -70,7 +70,9 @@ public class AssentosA2 extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(AssentosA1.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setBackground(Color.WHITE);
-		setResizable(false);
+		Dimension tamanhoMinimo = new Dimension(860, 500);
+		setTitle("Sistema de Cinema");
+		 setMinimumSize(tamanhoMinimo);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 500);
 

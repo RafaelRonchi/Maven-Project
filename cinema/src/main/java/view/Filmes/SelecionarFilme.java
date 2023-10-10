@@ -69,6 +69,9 @@ public class SelecionarFilme extends JFrame {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1139, 604);
+		setTitle("Sistema de Cinema");
+		Dimension tamanhoMinimo = new Dimension(1139, 604);
+		 setMinimumSize(tamanhoMinimo);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 64));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

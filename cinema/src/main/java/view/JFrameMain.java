@@ -27,6 +27,7 @@ import java.awt.Image;
 
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import net.miginfocom.swing.MigLayout;
 import view.Filmes.SelecionarFilme;
@@ -72,12 +73,12 @@ public class JFrameMain extends JFrame {
 	 */
 	public JFrameMain() {
 		 FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstancia();
-		
+		 Dimension tamanhoMinimo = new Dimension(860, 500);
+		 setMinimumSize(tamanhoMinimo);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(JFrameMain.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setBackground(Color.WHITE);
 		setTitle("Sistema de Cinema");
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 500);
 		contentPane = new JPanel();

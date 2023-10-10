@@ -71,7 +71,9 @@ public class CadastroAssentos extends JFrame {
 	public CadastroAssentos(Assento assento) {
 		mudaCorAssento(assento);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(JFrameMain.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
-
+		Dimension tamanhoMinimo = new Dimension(860, 500);
+		 setMinimumSize(tamanhoMinimo);
+		 setTitle("Sistema de Cinema");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 974, 548);
 		contentPane = new JPanel();

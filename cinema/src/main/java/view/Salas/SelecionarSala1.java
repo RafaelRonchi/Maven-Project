@@ -67,7 +67,9 @@ public class SelecionarSala1 extends JFrame {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SelecionarSala1.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		Dimension tamanhoMinimo = new Dimension(1107, 610);
+		 setMinimumSize(tamanhoMinimo);
+		 setTitle("Sistema de Cinema");
 		setBounds(100, 100, 1107, 610);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 64));

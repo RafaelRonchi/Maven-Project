@@ -1,6 +1,7 @@
 package view.Funcionario;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -73,7 +74,10 @@ public class CadastrarFuncionario extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(JFrameMain.class.getResource("/Images/0609b1d7-4a7d-41be-bd18-081ecb35eb9e.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Sistema de Cinema");
 		setBounds(100, 100, 974, 548);
+		Dimension tamanhoMinimo = new Dimension(860, 500);
+		 setMinimumSize(tamanhoMinimo);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 64));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
