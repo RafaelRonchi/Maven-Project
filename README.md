@@ -22,6 +22,7 @@ O projeto utiliza as seguintes tecnologias:
 - Java
 - Apache Maven
 - Window Builder JFrame
+- JUnit
 - MySQL
 
 ## Como Executar o Projeto
