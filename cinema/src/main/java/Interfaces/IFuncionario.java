@@ -12,5 +12,5 @@ public interface IFuncionario {
 	 boolean verificarLogin(Funcionario f);
 	 Funcionario verificarFuncionarioAdmin(Funcionario f);
 	 Funcionario getFuncionarioCPF(Long cpf);
-	ArrayList<Funcionario> listarFuncionario();
+	 ArrayList<Funcionario> listarFuncionario();
 }

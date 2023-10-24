@@ -22,6 +22,13 @@ public class Assento {
 		setSala(Sala);
 	}
 	
+	public Assento(int Row, int Col, Sala Sala, Cliente cliente) {
+		setRow(Row); 
+		setCol(Col);
+		setSala(Sala);
+		setCliente(cliente);
+	}
+	
 	
 	
 	public int getAssentoId() {
