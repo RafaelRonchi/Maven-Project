@@ -14,7 +14,7 @@ public class FuncionarioDAOTest {
 	private FuncionarioDAO dao = FuncionarioDAO.getInstancia();;
 
 	@Test
-	private void testMetodoInserirFuncionario() {
+	public void testMetodoInserirFuncionario() {
 		Funcionario funcionaro = new Funcionario();
 		funcionaro.setNome("teste");
 		funcionaro.setCpf(Long.parseLong("12312312312"));
@@ -27,7 +27,7 @@ public class FuncionarioDAOTest {
 	}
 	
 	@Test
-	private void testMetodoInserirGetFuncionarioCPF() {
+	public void testMetodoInserirGetFuncionarioCPF() {
 		Funcionario funcionaro = new Funcionario();
 		funcionaro.setNome("teste");
 		funcionaro.setCpf(Long.parseLong("12312312312"));
@@ -40,14 +40,14 @@ public class FuncionarioDAOTest {
 	}
 	
 	@Test
-	private void testMetodoGetFuncionarios() {
+	public void testMetodoGetFuncionarios() {
 		ArrayList<Funcionario> listaFuncionarios = dao.listarFuncionario();
 		assertNotNull(listaFuncionarios);
 		assertEquals(false, listaFuncionarios.isEmpty());
 	}
 
 	@Test
-	private void testMetodoAlterarFuncionario() {
+	public void testMetodoAlterarFuncionario() {
 		Funcionario funcionaro = new Funcionario();
 		funcionaro.setNome("teste novo nome");
 		funcionaro.setCpf(Long.parseLong("12312312312"));
@@ -60,7 +60,7 @@ public class FuncionarioDAOTest {
 	}
 
 	@Test
-	private void testMetodoVerificarLogin() {
+	public void testMetodoVerificarLogin() {
 		Funcionario funcionaro = new Funcionario();
 		funcionaro.setNome("teste novo nome");
 		funcionaro.setCpf(Long.parseLong("12312312312"));
@@ -73,7 +73,7 @@ public class FuncionarioDAOTest {
 	}
 
 	@Test
-	private void testMetodoVerificarAdmin() {
+	public void testMetodoVerificarAdmin() {
 		Funcionario funcionaro = new Funcionario();
 		funcionaro.setNome("teste novo nome");
 		funcionaro.setCpf(Long.parseLong("12312312312"));
@@ -86,7 +86,7 @@ public class FuncionarioDAOTest {
 	}
 
 	@Test
-	private void testMetodoRemoverFuncionario() {
+	public void testMetodoRemoverFuncionario() {
 		Funcionario funcionaro = new Funcionario();
 		funcionaro.setNome("teste novo nome");
 		funcionaro.setCpf(Long.parseLong("12312312312"));

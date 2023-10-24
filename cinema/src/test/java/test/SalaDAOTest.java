@@ -11,10 +11,10 @@ import controller.SalaDAO;
 import model.Sala;
 
 public class SalaDAOTest {
-	private SalaDAO dao = SalaDAO.getInstancia();
+	public SalaDAO dao = SalaDAO.getInstancia();
 	
 	@Test
-	private void testVerSala() {
+	public void testVerSala() {
 		ArrayList<Sala> salas = dao.verSala(); 
 		assertNotNull(salas);
 		assertEquals(false, salas.isEmpty());

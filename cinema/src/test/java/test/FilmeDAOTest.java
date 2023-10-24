@@ -11,9 +11,9 @@ import controller.FilmeDAO;
 import model.Filme;
 
 public class FilmeDAOTest {
-	private FilmeDAO dao = FilmeDAO.getInstancia();
+	public FilmeDAO dao = FilmeDAO.getInstancia();
 	@Test
-	private void testMostraFilme() {
+	public void testMostraFilme() {
 		ArrayList<Filme> filmes = dao.mostraFilme();
 		assertNotNull(filmes);
 		assertEquals(false, filmes.isEmpty());

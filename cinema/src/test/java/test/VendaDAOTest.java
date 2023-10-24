@@ -17,7 +17,7 @@ import model.Venda;
 public class VendaDAOTest {
 	VendaDAO dao = VendaDAO.getInstancia();
 	@Test
-	private void testCadastrarVenda() {
+	public void testCadastrarVenda() {
 		Cliente cliente = new Cliente(Long.parseLong("11111111111"), "Teste", true);
 		Sala sala = new Sala("A1", "10:00:00", new Filme("Jonh Wick"));
 		Assento assento = new Assento(1, 1, sala , cliente);
@@ -27,7 +27,7 @@ public class VendaDAOTest {
 	}
 	
 	@Test
-	private void testGetVenda() {
+	public void testGetVenda() {
 		List<Venda> vendas = dao.pegarVendas();
 		assertNotNull(vendas);
 		assertEquals(false, vendas.isEmpty());
