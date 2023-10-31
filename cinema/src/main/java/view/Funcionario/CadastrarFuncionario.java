@@ -77,7 +77,7 @@ public class CadastrarFuncionario extends JFrame {
 		setTitle("Sistema de Cinema");
 		setBounds(100, 100, 974, 548);
 		Dimension tamanhoMinimo = new Dimension(860, 500);
-		 setMinimumSize(tamanhoMinimo);
+		setMinimumSize(tamanhoMinimo);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 64));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,7 +135,7 @@ public class CadastrarFuncionario extends JFrame {
 
 		JRadioButton radioAdmin = new JRadioButton("Administrador");
 		contentPane.add(radioAdmin, "cell 3 6,alignx center,aligny center");
-		
+
 		JButton btnCadastrar = new JButton("Cadastar");
 		btnCadastrar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 11));
 		btnCadastrar.setBackground(Color.WHITE);
@@ -145,7 +145,7 @@ public class CadastrarFuncionario extends JFrame {
 				String cpf = txtCpf.getText();
 				String nome = txtNome.getText();
 				Boolean isAdmin = radioAdmin.isSelected();
-				
+
 				cpf = cpf.replaceAll("[^0-9]", ""); // Remove todos os caracteres não numéricos
 
 				if (nome.isEmpty() || cpf.isEmpty() || cpf.length() < 11) {
@@ -155,8 +155,8 @@ public class CadastrarFuncionario extends JFrame {
 					funcio.setNome(nome);
 					funcio.setAdmin(isAdmin);
 
-					boolean a = funcionarioDAO.inserir(funcio);
-					if (a) {
+					int a = funcionarioDAO.inserir(funcio);
+					if (a > 0) {
 						JOptionPane.showMessageDialog(null, "CPF cadastrado");
 					} else {
 						JOptionPane.showMessageDialog(null, "CPF já existente");
@@ -173,7 +173,8 @@ public class CadastrarFuncionario extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setVisible(false);
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setLayout(new MigLayout("", "[100px,grow][][][100px,grow][][100px,grow][][100px,grow]", "[][20px][grow]"));
+		panel.setLayout(
+				new MigLayout("", "[100px,grow][][][100px,grow][][100px,grow][][100px,grow]", "[][20px][grow]"));
 
 		contentPane.add(panel, "cell 1 9 3 1,grow");
 
@@ -201,9 +202,9 @@ public class CadastrarFuncionario extends JFrame {
 		panel.add(adminLabel, "cell 7 0,width 53,alignx center,aligny center");
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "CPF", "Nome", "Valor Vendas", "Admin" }));
+		table.setModel(
+				new DefaultTableModel(new Object[][] {}, new String[] { "CPF", "Nome", "Valor Vendas", "Admin" }));
 		panel.add(table, "cell 0 2 8 1,grow");
-
 
 		JButton btnExcluir = new JButton("Excluir");
 
@@ -325,34 +326,33 @@ public class CadastrarFuncionario extends JFrame {
 		btnListar.setBackground(Color.WHITE);
 
 		btnListar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        ArrayList<Funcionario> lista = funcionarioDAO.listarFuncionario();
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Funcionario> lista = funcionarioDAO.listarFuncionario();
 
-		        DefaultTableModel model = (DefaultTableModel) table.getModel();
-		        model.setRowCount(0); // Limpa as linhas da tabela
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.setRowCount(0); // Limpa as linhas da tabela
 
-		        for (Funcionario funcionario : lista) {
-		            String cpfFormatado = formatarCPF(funcionario.getCpf());
-		            
-		            funcionario.setVendasDouble(funcionarioDAO.pegarValorVendasFuncionario(funcionarioDAO.getFuncionarioCPF(funcionario.getCpf())));
-		            String isAdmin = funcionario.getAdmin() ? "Sim" : "Não";
-		            
-		            Object[] row = { cpfFormatado, funcionario.getNome(), funcionario.getVendasDouble(), isAdmin };
-		            model.addRow(row);
-		        }
+				for (Funcionario funcionario : lista) {
+					String cpfFormatado = formatarCPF(funcionario.getCpf());
 
-		        panel.setVisible(true);
-		        btnExcluir.setVisible(true);
-		        btnAlterar.setVisible(true);
-		    }
+					funcionario.setVendasDouble(funcionarioDAO
+							.pegarValorVendasFuncionario(funcionarioDAO.getFuncionarioCPF(funcionario.getCpf())));
+					String isAdmin = funcionario.getAdmin() ? "Sim" : "Não";
 
-		    private String formatarCPF(Long cpf) {
-		        String cpfFormatado = String.format("%011d", cpf);
-		        return cpfFormatado.substring(0, 3) + "." +
-		               cpfFormatado.substring(3, 6) + "." +
-		               cpfFormatado.substring(6, 9) + "-" +
-		               cpfFormatado.substring(9, 11);
-		    }
+					Object[] row = { cpfFormatado, funcionario.getNome(), funcionario.getVendasDouble(), isAdmin };
+					model.addRow(row);
+				}
+
+				panel.setVisible(true);
+				btnExcluir.setVisible(true);
+				btnAlterar.setVisible(true);
+			}
+
+			private String formatarCPF(Long cpf) {
+				String cpfFormatado = String.format("%011d", cpf);
+				return cpfFormatado.substring(0, 3) + "." + cpfFormatado.substring(3, 6) + "."
+						+ cpfFormatado.substring(6, 9) + "-" + cpfFormatado.substring(9, 11);
+			}
 		});
 
 	}

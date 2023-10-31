@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import controller.FuncionarioDAO;
@@ -13,6 +14,7 @@ import model.Funcionario;
 public class FuncionarioDAOTest {
 	private FuncionarioDAO dao = FuncionarioDAO.getInstancia();;
 
+	@Order(1)
 	@Test
 	public void testMetodoInserirFuncionario() {
 		Funcionario funcionaro = new Funcionario();
@@ -21,9 +23,9 @@ public class FuncionarioDAOTest {
 		funcionaro.setVendasDouble(0.0);
 		funcionaro.setAdmin(true);
 
-		Boolean fInserir = dao.inserir(funcionaro);
-		assertNotNull(fInserir);
-		assertEquals(true, fInserir);
+		int fInserir = dao.inserir(funcionaro);
+//		assertNotNull(fInserir);
+		assertEquals(true, fInserir > 0);
 	}
 	
 	@Test
@@ -92,6 +94,8 @@ public class FuncionarioDAOTest {
 		funcionaro.setCpf(Long.parseLong("12312312312"));
 		funcionaro.setVendasDouble(0.0);
 		funcionaro.setAdmin(true);
+		int id = dao.inserir(funcionaro);
+		funcionaro.setId(id);
 
 		Boolean fRemover = dao.remover(funcionaro);
 		assertNotNull(fRemover);
