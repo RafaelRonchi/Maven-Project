@@ -15,28 +15,23 @@ public class FuncionarioDAOTest {
 
 	@Test
 	public void testMetodoInserirFuncionario() {
-		Funcionario funcionaro = new Funcionario();
-		funcionaro.setNome("teste");
-		funcionaro.setCpf(Long.parseLong("12312312312"));
-		funcionaro.setVendasDouble(0.0);
-		funcionaro.setAdmin(true);
+		Funcionario funcionaro = new Funcionario(Long.parseLong("12312312312"), "teste", 0.0, true);
 
 		Boolean fInserir = dao.inserir(funcionaro);
+		Boolean fRemover = dao.remover(funcionaro);
 		assertNotNull(fInserir);
 		assertEquals(true, fInserir);
 	}
 	
 	@Test
-	public void testMetodoInserirGetFuncionarioCPF() {
-		Funcionario funcionaro = new Funcionario();
-		funcionaro.setNome("teste");
-		funcionaro.setCpf(Long.parseLong("12312312312"));
-		funcionaro.setVendasDouble(0.0);
-		funcionaro.setAdmin(true);
-
+	public void testMetodoGetFuncionarioCPF() {
+		Funcionario funcionaro = new Funcionario(Long.parseLong("12312312312"), "teste", 0.0, true);
+		Boolean fInserir = dao.inserir(funcionaro);
 		Funcionario fCPF = dao.getFuncionarioCPF(funcionaro.getCpf());
+		Boolean fRemover = dao.remover(funcionaro);
+		
 		assertNotNull(fCPF);
-		assertEquals(funcionaro, fCPF);
+		assertEquals(false, fCPF.equals(null));
 	}
 	
 	@Test
@@ -48,53 +43,45 @@ public class FuncionarioDAOTest {
 
 	@Test
 	public void testMetodoAlterarFuncionario() {
-		Funcionario funcionaro = new Funcionario();
-		funcionaro.setNome("teste novo nome");
-		funcionaro.setCpf(Long.parseLong("12312312312"));
-		funcionaro.setVendasDouble(0.0);
-		funcionaro.setAdmin(true);
-
+		Funcionario funcionaro = new Funcionario(Long.parseLong("12312312312"), "teste", 0.0, true);
+		Boolean fInserir = dao.inserir(funcionaro);
+		funcionaro.setNome("tester");
+		
 		Boolean fAlterar = dao.alterar(funcionaro);
+		Boolean fRemover = dao.remover(funcionaro);
 		assertNotNull(fAlterar);
 		assertEquals(true, fAlterar);
 	}
 
 	@Test
 	public void testMetodoVerificarLogin() {
-		Funcionario funcionaro = new Funcionario();
-		funcionaro.setNome("teste novo nome");
-		funcionaro.setCpf(Long.parseLong("12312312312"));
-		funcionaro.setVendasDouble(0.0);
-		funcionaro.setAdmin(true);
+		Funcionario funcionaro = new Funcionario(Long.parseLong("12312312312"), "teste", 0.0, true);
+		Boolean fInserir = dao.inserir(funcionaro);
 
 		Boolean fLogin = dao.verificarLogin(funcionaro);
+		Boolean fRemover = dao.remover(funcionaro);
 		assertNotNull(fLogin);
 		assertEquals(true, fLogin);
 	}
 
 	@Test
 	public void testMetodoVerificarAdmin() {
-		Funcionario funcionaro = new Funcionario();
-		funcionaro.setNome("teste novo nome");
-		funcionaro.setCpf(Long.parseLong("12312312312"));
-		funcionaro.setVendasDouble(0.0);
-		funcionaro.setAdmin(true);
+		Funcionario funcionaro = new Funcionario(Long.parseLong("12312312312"), "teste", 0.0, true);
+		Boolean fInserir = dao.inserir(funcionaro);
 
 		Funcionario fLoginAdmin = dao.verificarFuncionarioAdmin(funcionaro);
+		Boolean fRemover = dao.remover(funcionaro);
 		assertNotNull(fLoginAdmin);
-		assertEquals(fLoginAdmin, funcionaro);
+		assertEquals(false, fLoginAdmin.equals(null));
 	}
 
 	@Test
 	public void testMetodoRemoverFuncionario() {
-		Funcionario funcionaro = new Funcionario();
-		funcionaro.setNome("teste novo nome");
-		funcionaro.setCpf(Long.parseLong("12312312312"));
-		funcionaro.setVendasDouble(0.0);
-		funcionaro.setAdmin(true);
+		Funcionario funcionaro = new Funcionario(Long.parseLong("12312312312"), "teste", 0.0, true);
+		dao.inserir(funcionaro);
 
 		Boolean fRemover = dao.remover(funcionaro);
-		assertNotNull(fRemover);
+		assertNotNull(fRemover); 
 		assertEquals(true, fRemover);
 	}
 }

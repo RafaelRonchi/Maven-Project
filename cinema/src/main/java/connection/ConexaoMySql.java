@@ -8,7 +8,7 @@ public class ConexaoMySql {
 	// Usuario do banco
 	private static final String url = "jdbc:mysql://localhost:3306/cinemapds";
 	private static final String user = "root";
-	private static final String pass= "aluno";
+	private static final String pass= "root";
 	
 	// Var da conexão
 	private static Connection conn;
