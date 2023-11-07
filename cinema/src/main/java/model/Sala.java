@@ -17,6 +17,12 @@ public class Sala {
 		setTime(time);
 		setFilme(filme);
 	}
+	public Sala(int id, String nome, String time, Filme filme) {
+		setSalaId(id);
+		setNome(nome);
+		setTime(time);
+		setFilme(filme);
+	}
 	
 	public Sala(String Nome1) {
 		setNome(Nome1);
